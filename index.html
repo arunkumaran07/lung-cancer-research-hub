@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lung Cancer Research Hub</title>
+<meta name="description" content="Open lung cancer clinical trials (Canada first), new papers, data portals, guidelines, funders and patient resources, refreshed daily.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --bg:#FFFFFF; --surface:#FBFBFA; --fg:#15191C; --muted:#5B6369; --line:#E1E3E0;
+  --accent:#1F5C5A; --accent-soft:#E4EFEE; --ok:#2E6B4F; --warn:#8A5B14; --tag:#F1F2EF;
+  --font-display:"Newsreader", Georgia, "Times New Roman", serif;
+  --font-body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#121518; --surface:#1A1E22; --fg:#ECEEEF; --muted:#9CA5AB; --line:#2A3036;
+    --accent:#7FC4BE; --accent-soft:#1E2D2C; --ok:#6FC79B; --warn:#D8A85A; --tag:#222830; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#121518; --surface:#1A1E22; --fg:#ECEEEF; --muted:#9CA5AB; --line:#2A3036;
+  --accent:#7FC4BE; --accent-soft:#1E2D2C; --ok:#6FC79B; --warn:#D8A85A; --tag:#222830; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 64px; }
+body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.55 var(--font-body); }
+a { color: var(--accent); }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+@media (max-width: 640px) { .wrap { padding: 0 16px; } }
+header.brand { padding: 30px 0 18px; }
+h1 { font-family: var(--font-display); font-weight:600; font-size: clamp(1.7rem, 3.2vw, 2.4rem); line-height:1.1; margin:0 0 6px; letter-spacing:-0.01em; }
+.tagline { color: var(--muted); margin:0; max-width: 72ch; }
+.stamp { color: var(--muted); font-size: 0.84rem; margin-top: 10px; font-variant-numeric: tabular-nums; }
+nav.sections { position: sticky; top:0; z-index:5; background: var(--bg); border-bottom:1px solid var(--line); border-top:1px solid var(--line); }
+nav.sections .wrap { display:flex; gap:24px; overflow-x:auto; padding-top:13px; padding-bottom:13px; }
+nav.sections a { color: var(--fg); text-decoration:none; font-weight:700; font-size:0.86rem; letter-spacing:0.05em; text-transform:uppercase; white-space:nowrap; }
+nav.sections a:hover { color: var(--accent); }
+section.block { padding: 40px 0; border-bottom: 1px solid var(--line); }
+h2 { font-family: var(--font-display); font-weight:600; font-size: clamp(1.45rem, 3vw, 1.9rem); margin:0 0 6px; letter-spacing:-0.01em; }
+h3 { font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; margin:28px 0 12px; font-weight:700; }
+p.note { color: var(--muted); max-width: 78ch; margin: 0 0 18px; font-size: 0.94rem; }
+.kpis { display:flex; flex-wrap:wrap; gap:28px; margin: 6px 0 22px; }
+.kpi b { display:block; font-family: var(--font-display); font-size: 1.9rem; font-weight:600; line-height:1.1; font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--muted); font-size: 0.84rem; }
+.filters { display:grid; gap:10px; margin-bottom: 14px; }
+.frow { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.flabel { font-size:0.74rem; letter-spacing:0.07em; text-transform:uppercase; color: var(--muted); font-weight:700; min-width: 84px; }
+button.chip { font:inherit; font-size:0.84rem; padding:5px 12px; border-radius:999px; border:1px solid var(--line); background: var(--surface); color: var(--muted); cursor:pointer; }
+button.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight:600; }
+select, input[type="search"] { font:inherit; font-size:0.88rem; padding:6px 10px; border-radius:8px; border:1px solid var(--line); background: var(--surface); color: var(--fg); }
+input[type="search"] { flex:1; min-width: min(280px, 100%); }
+button.plain { font:inherit; font-size:0.84rem; background:none; border:1px solid var(--line); border-radius:8px; padding:6px 12px; color: var(--fg); cursor:pointer; }
+button.plain:hover { border-color: var(--accent); color: var(--accent); }
+.resultbar { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; margin: 6px 0 10px; color: var(--muted); font-size: 0.88rem; }
+.tablewrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; background: var(--surface); }
+table { border-collapse: collapse; width:100%; font-size:0.88rem; }
+th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); vertical-align: top; }
+th { font-size:0.72rem; letter-spacing:0.07em; text-transform:uppercase; font-weight:700; white-space:nowrap; }
+tbody tr:last-child td { border-bottom:0; }
+td.study { min-width: 300px; }
+td.study .iv { display:block; color: var(--muted); font-size:0.82rem; margin-top:3px; }
+.tag { display:inline-block; font-size:0.74rem; padding:1px 7px; border-radius:6px; background: var(--tag); color: var(--fg); margin: 0 4px 4px 0; white-space:nowrap; }
+.tag.bm { background: var(--accent-soft); color: var(--accent); font-weight:600; }
+a.nct { font-family: var(--font-mono); font-size:0.8rem; text-decoration:none; white-space:nowrap; }
+a.nct:hover { text-decoration: underline; }
+.status { font-size:0.78rem; font-weight:600; white-space:nowrap; }
+.status.R { color: var(--ok); } .status.N { color: var(--warn); }
+details.sites summary { cursor:pointer; color: var(--accent); font-size:0.82rem; white-space:nowrap; }
+details.sites ul { margin:6px 0 0; padding-left: 16px; font-size:0.8rem; color: var(--muted); min-width: 220px; }
+.pager { display:flex; gap:8px; justify-content:center; align-items:center; margin-top: 14px; font-size: 0.88rem; color: var(--muted); }
+.empty { color: var(--muted); padding: 18px; display:block; }
+.plist { list-style:none; margin:0; padding:0; display:grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); column-gap: 36px; }
+@media (max-width: 640px) { .plist { grid-template-columns: 1fr; } }
+.plist li { padding: 10px 0; border-bottom: 1px dotted var(--line); min-width:0; }
+.plist .pt { display:block; color: var(--fg); text-decoration:none; font-weight:500; }
+.plist .pt:hover { color: var(--accent); }
+.plist .pm { display:block; color: var(--muted); font-size: 0.82rem; margin-top:2px; }
+.rlist { list-style:none; margin:0; padding:0; display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+.rlist a { display:block; height:100%; padding:13px 15px; border:1px solid var(--line); border-radius:12px; background: var(--surface); text-decoration:none; color: inherit; }
+.rlist a:hover { border-color: var(--accent); }
+.rname { display:block; font-weight:600; color: var(--accent); margin-bottom:3px; }
+.rdesc { display:block; color: var(--muted); font-size: 0.86rem; }
+.rwhere { display:block; color: var(--muted); font-size: 0.74rem; margin-top: 6px; letter-spacing: 0.04em; text-transform: uppercase; }
+footer { padding: 30px 0 50px; color: var(--muted); font-size: 0.86rem; }
+code { font-family: var(--font-mono); font-size: 0.82em; background: var(--tag); padding: 1px 5px; border-radius: 4px; word-break: break-word; }
+.sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+</style>
+</head>
+<body>
+<header class="brand"><div class="wrap">
+  <h1>Lung Cancer Research Hub</h1>
+  <p class="tagline">Open clinical trials with Canadian sites first, newly published papers, data portals, guidelines, funders and patient resources for lung cancer research, in one place.</p>
+  <div class="stamp" id="stamp">Loading the latest data…</div>
+</div></header>
+
+<nav class="sections" aria-label="Sections"><div class="wrap">
+  <a href="#trials">Trials</a><a href="#papers">New papers</a><a href="#data">Data &amp; portals</a>
+  <a href="#guidelines">Guidelines</a><a href="#funders">Funders</a><a href="#patients">Patients</a>
+  <a href="#preprints">Preprints</a><a href="#about">About</a>
+</div></nav>
+
+<main>
+<section class="block" id="trials"><div class="wrap">
+  <h2>Open clinical trials</h2>
+  <p class="note">Studies registered on ClinicalTrials.gov that are recruiting or not yet recruiting. The view opens on trials with at least one Canadian site; switch to the United States or worldwide below. Subtype, biomarker, modality and setting tags are assigned automatically from each record's title, conditions and interventions, so always confirm eligibility on the registry page.</p>
+  <div class="kpis" id="kpis"></div>
+
+  <div class="filters" role="group" aria-label="Trial filters">
+    <div class="frow"><span class="flabel">Where</span>
+      <span id="f-where"></span>
+      <select id="f-prov" aria-label="Province" hidden><option value="">All provinces</option></select>
+    </div>
+    <div class="frow"><span class="flabel">Subtype</span><span id="f-sub"></span></div>
+    <div class="frow"><span class="flabel">Refine</span>
+      <select id="f-bm" aria-label="Biomarker"><option value="">Any biomarker</option></select>
+      <select id="f-mod" aria-label="Modality"><option value="">Any modality</option></select>
+      <select id="f-set" aria-label="Disease setting"><option value="">Any setting</option></select>
+      <select id="f-ph" aria-label="Phase"><option value="">Any phase</option></select>
+      <select id="f-ty" aria-label="Study type"><option value="">Interventional and observational</option><option value="I">Interventional only</option><option value="O">Observational only</option></select>
+      <select id="f-st" aria-label="Recruitment status"><option value="">Recruiting or not yet</option><option value="R">Recruiting now</option><option value="N">Not yet recruiting</option></select>
+    </div>
+    <div class="frow"><span class="flabel">Search</span>
+      <input type="search" id="f-q" placeholder="Drug, sponsor, city, NCT number…" aria-label="Search trials">
+      <button class="plain" id="f-reset">Reset</button>
+    </div>
+  </div>
+
+  <div class="resultbar">
+    <span id="tcount">–</span>
+    <span>
+      <label>Sort <select id="f-sort" aria-label="Sort order">
+        <option value="up">Recently updated</option><option value="sd">Newest start</option><option value="ph">Latest phase first</option>
+      </select></label>
+      <button class="plain" id="csv">Download this view (CSV)</button>
+      <button class="plain" id="share">Copy link to this view</button>
+    </span>
+  </div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Study</th><th>Phase</th><th>Tags</th><th>Sponsor</th><th>Sites</th><th>Status</th><th>Registry</th></tr></thead>
+    <tbody id="tbody"><tr><td colspan="7" class="empty">Loading trials…</td></tr></tbody>
+  </table></div>
+  <div class="pager" id="pager"></div>
+</div></section>
+
+<section class="block" id="papers"><div class="wrap">
+  <h2>New papers</h2>
+  <p class="note">PubMed records added in the last few months that match one of five standing searches. Every search requires a lung cancer term; the exact queries are listed under About. A paper can appear under more than one heading.</p>
+  <div class="filters"><div class="frow"><span id="p-cat"></span></div>
+    <div class="frow"><input type="search" id="p-q" placeholder="Search titles, journals, authors…" aria-label="Search papers"></div></div>
+  <div class="resultbar"><span id="pcount">–</span></div>
+  <ul class="plist" id="plist"></ul>
+  <div class="pager"><button class="plain" id="pmore" hidden>Show more</button></div>
+</div></section>
+
+<section class="block" id="data"><div class="wrap"><h2>Data &amp; portals</h2>
+  <p class="note">Public genomic, proteomic and clinical data resources that hold lung cancer data, and trial finders.</p><div id="c-data"></div></div></section>
+<section class="block" id="guidelines"><div class="wrap"><h2>Guidelines &amp; clinical reference</h2>
+  <p class="note">Treatment and screening guidance. Some publishers require a free account to read the full documents.</p><div id="c-guidelines"></div></div></section>
+<section class="block" id="funders"><div class="wrap"><h2>Funders &amp; grants</h2>
+  <p class="note">Organizations that fund lung cancer research. Programs and deadlines change, so check each funder's page for current calls.</p><div id="c-funders"></div></div></section>
+<section class="block" id="patients"><div class="wrap"><h2>Patients &amp; advocacy</h2>
+  <p class="note">Information and support for people affected by lung cancer and their families.</p><div id="c-patients"></div></div></section>
+<section class="block" id="preprints"><div class="wrap"><h2>Preprints &amp; open science</h2>
+  <p class="note">Preprint servers and repositories. Preprints have not been peer reviewed.</p><div id="c-preprints"></div></div></section>
+
+<section class="block" id="about"><div class="wrap">
+  <h2>About this hub</h2>
+  <p class="note">Maintained by Arun Kumaran Anguraj Vadivel, Toronto. This page is a research reference, not medical advice; people looking for a trial should discuss options with their care team.</p>
+  <h3>How the data are gathered</h3>
+  <p class="note">Every morning a GitHub Action runs <code>refresh.py</code>, which queries the ClinicalTrials.gov API for <code id="q-ct">…</code> with status recruiting or not yet recruiting, and PubMed for the searches below. Trials that leave recruitment drop off the table at the next refresh. Papers stay in the feed for <span id="q-days">120</span> days after PubMed adds them. The curated sections are edited by hand in <code>curated.json</code>.</p>
+  <ul class="plist" id="q-pm"></ul>
+  <h3>Limits</h3>
+  <p class="note">ClinicalTrials.gov is the largest registry but not the only one; some Canadian and international studies are listed only in other registries. Automatic tags can miss or mislabel studies, especially basket trials that enrol several tumour types. Publication-type tags in PubMed are added during indexing, so the newest trial reports and guidelines can take several weeks to appear.</p>
+</div></section>
+</main>
+<footer><div class="wrap">Data from ClinicalTrials.gov (U.S. National Library of Medicine) and PubMed. Source code and change history are on GitHub.</div></footer>
+
+<script>
+(() => {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const PAGE = 50;
+  const SUBS = ["All", "NSCLC", "SCLC", "Mesothelioma", "Thymic", "Lung cancer, unspecified"];
+  const WHERE = [["CA", "Canada"], ["US", "United States"], ["ALL", "Worldwide"]];
+  const PHASE_RANK = {"Early 1": 0.5, "1": 1, "1/2": 1.5, "2": 2, "2/3": 2.5, "3": 3, "4": 4, "N/A": -1};
+  const DEFAULTS = {where: "CA", prov: "", sub: "All", bm: "", mod: "", set: "", ph: "", ty: "", st: "", q: "", sort: "up", page: 1};
+  let S = {...DEFAULTS};
+  let TRIALS = [], PAPERS = [], META = {};
+  let pcat = "All", pshown = 40;
+
+  function readHash() {
+    const h = new URLSearchParams(location.hash.slice(1));
+    for (const k of Object.keys(DEFAULTS)) if (h.has(k)) S[k] = k === "page" ? (+h.get(k) || 1) : h.get(k);
+  }
+  function writeHash() {
+    const h = new URLSearchParams();
+    for (const [k, v] of Object.entries(S)) if (v !== DEFAULTS[k] && v !== "") h.set(k, v);
+    const s = h.toString();
+    history.replaceState(null, "", s ? "#" + s : location.pathname + location.search);
+  }
+
+  function chips(el, items, key, after) {
+    el.innerHTML = items.map(([v, label]) =>
+      `<button class="chip" data-v="${esc(v)}" aria-pressed="${S[key] === v}">${esc(label)}</button>`).join(" ");
+    el.onclick = (e) => {
+      const b = e.target.closest("button"); if (!b) return;
+      S[key] = b.dataset.v; S.page = 1;
+      el.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x.dataset.v === S[key]));
+      if (after) after();
+      render();
+    };
+  }
+  function fillSelect(el, values) {
+    el.insertAdjacentHTML("beforeend", values.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join(""));
+  }
+  const count = (key) => {
+    const m = new Map();
+    TRIALS.forEach(t => (Array.isArray(t[key]) ? t[key] : [t[key]]).forEach(v => m.set(v, (m.get(v) || 0) + 1)));
+    return [...m.entries()].sort((a, b) => b[1] - a[1]).map(x => x[0]);
+  };
+
+  function matches(t) {
+    if (S.where === "CA" && !t.ca.length) return false;
+    if (S.where === "US" && !t.co.includes("United States")) return false;
+    if (S.where === "CA" && S.prov && !t.ca.some(s => s[2] === S.prov)) return false;
+    if (S.sub !== "All" && !t.sub.includes(S.sub)) return false;
+    if (S.bm && !t.bm.includes(S.bm)) return false;
+    if (S.mod && !t.mod.includes(S.mod)) return false;
+    if (S.set && !t.set.includes(S.set)) return false;
+    if (S.ph && t.ph !== S.ph) return false;
+    if (S.ty && t.ty !== S.ty) return false;
+    if (S.st && t.st !== S.st) return false;
+    if (S.q) {
+      const hay = [t.id, t.t, t.sp, t.iv.join(" "), t.co.join(" "), t.ca.flat().join(" ")].join(" ").toLowerCase();
+      if (!S.q.toLowerCase().split(/\s+/).filter(Boolean).every(w => hay.includes(w))) return false;
+    }
+    return true;
+  }
+  function sorted(rows) {
+    const r = rows.slice();
+    if (S.sort === "sd") r.sort((a, b) => (b.sd || "").localeCompare(a.sd || ""));
+    else if (S.sort === "ph") r.sort((a, b) => (PHASE_RANK[b.ph] ?? -1) - (PHASE_RANK[a.ph] ?? -1) || (b.up || "").localeCompare(a.up || ""));
+    else r.sort((a, b) => (b.up || "").localeCompare(a.up || ""));
+    return r;
+  }
+
+  function siteCell(t) {
+    if (S.where === "CA" && t.ca.length) {
+      const list = (S.prov ? t.ca.filter(s => s[2] === S.prov) : t.ca);
+      const label = `${t.ca.length} in Canada` + (t.ns > t.ca.length ? ` · ${t.ns} total` : "");
+      return `<details class="sites"><summary>${esc(label)}</summary><ul>${list.map(s =>
+        `<li>${esc(s[0] || "Site")}${s[1] ? ", " + esc(s[1]) : ""}${s[2] ? ", " + esc(s[2]) : ""}</li>`).join("")}</ul></details>`;
+    }
+    const n = t.co.length;
+    return `${t.ns || "–"} site${t.ns === 1 ? "" : "s"}` + (n ? `<br><span style="color:var(--muted);font-size:0.8rem">${n === 1 ? esc(t.co[0]) : n + " countries"}</span>` : "");
+  }
+
+  function render() {
+    writeHash();
+    $("f-prov").hidden = S.where !== "CA";
+    const rows = sorted(TRIALS.filter(matches));
+    const pages = Math.max(1, Math.ceil(rows.length / PAGE));
+    if (S.page > pages) S.page = pages;
+    const slice = rows.slice((S.page - 1) * PAGE, S.page * PAGE);
+    $("tcount").textContent = `${rows.length.toLocaleString()} trial${rows.length === 1 ? "" : "s"} match`;
+    $("tbody").innerHTML = slice.length ? slice.map(t => `<tr>
+      <td class="study">${esc(t.t)}${t.iv.length ? `<span class="iv">${esc(t.iv.join(" · "))}</span>` : ""}</td>
+      <td>${esc(t.ph)}${t.ty === "O" ? '<br><span style="color:var(--muted);font-size:0.78rem">Observational</span>' : ""}</td>
+      <td>${t.sub.filter(s => s !== "Lung cancer, unspecified").map(s => `<span class="tag">${esc(s)}</span>`).join("")}${t.bm.map(b => `<span class="tag bm">${esc(b)}</span>`).join("")}${t.mod.slice(0, 3).map(m => `<span class="tag">${esc(m)}</span>`).join("")}</td>
+      <td>${esc(t.sp)}</td>
+      <td>${siteCell(t)}</td>
+      <td><span class="status ${t.st}">${t.st === "R" ? "Recruiting" : "Not yet recruiting"}</span></td>
+      <td><a class="nct" href="https://clinicaltrials.gov/study/${esc(t.id)}" target="_blank" rel="noopener">${esc(t.id)}</a></td>
+    </tr>`).join("") : `<tr><td colspan="7" class="empty">No trials match these filters.</td></tr>`;
+    $("pager").innerHTML = pages > 1 ? `<button class="plain" data-p="${S.page - 1}" ${S.page === 1 ? "disabled" : ""}>Previous</button>
+      <span>Page ${S.page} of ${pages}</span>
+      <button class="plain" data-p="${S.page + 1}" ${S.page === pages ? "disabled" : ""}>Next</button>` : "";
+    render.rows = rows;
+  }
+  $("pager").onclick = (e) => {
+    const b = e.target.closest("button[data-p]"); if (!b || b.disabled) return;
+    S.page = +b.dataset.p; render(); $("trials").scrollIntoView();
+  };
+
+  function bindSelect(id, key) {
+    const el = $(id); el.value = S[key];
+    el.onchange = () => { S[key] = el.value; S.page = 1; render(); };
+  }
+  let qTimer;
+  $("f-q").oninput = (e) => { clearTimeout(qTimer); qTimer = setTimeout(() => { S.q = e.target.value.trim(); S.page = 1; render(); }, 150); };
+  $("f-reset").onclick = () => { S = {...DEFAULTS}; setupControls(); render(); };
+  $("share").onclick = async () => {
+    try { await navigator.clipboard.writeText(location.href); $("share").textContent = "Link copied"; }
+    catch { $("share").textContent = "Copy the address bar"; }
+    setTimeout(() => $("share").textContent = "Copy link to this view", 2000);
+  };
+  $("csv").onclick = () => {
+    const cols = ["NCT", "Title", "Phase", "Status", "Type", "Sponsor", "Subtype", "Biomarkers", "Modalities", "Setting", "Interventions", "Canadian sites", "Total sites", "Countries", "Start", "Last update", "URL"];
+    const q = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const lines = [cols.join(",")].concat((render.rows || []).map(t => [t.id, t.t, t.ph, t.st === "R" ? "Recruiting" : "Not yet recruiting",
+      t.ty === "I" ? "Interventional" : t.ty === "O" ? "Observational" : "Other", t.sp, t.sub.join("; "), t.bm.join("; "), t.mod.join("; "), t.set.join("; "),
+      t.iv.join("; "), t.ca.map(s => s.filter(Boolean).join(", ")).join(" | "), t.ns, t.co.join("; "), t.sd, t.up,
+      "https://clinicaltrials.gov/study/" + t.id].map(q).join(",")));
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob(["﻿" + lines.join("\r\n")], {type: "text/csv"}));
+    a.download = `lung-trials-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  };
+
+  function setupControls() {
+    chips($("f-where"), WHERE, "where", () => { S.prov = ""; $("f-prov").value = ""; });
+    chips($("f-sub"), SUBS.filter(s => s === "All" || TRIALS.some(t => t.sub.includes(s))).map(s => [s, s === "Lung cancer, unspecified" ? "Unspecified" : s]), "sub");
+    [["f-prov", "prov"], ["f-bm", "bm"], ["f-mod", "mod"], ["f-set", "set"], ["f-ph", "ph"], ["f-ty", "ty"], ["f-st", "st"], ["f-sort", "sort"]].forEach(([id, k]) => bindSelect(id, k));
+    $("f-q").value = S.q;
+  }
+
+  function kpis() {
+    const ca = TRIALS.filter(t => t.ca.length).length;
+    const caR = TRIALS.filter(t => t.ca.length && t.st === "R").length;
+    $("kpis").innerHTML = [[TRIALS.length.toLocaleString(), "open trials worldwide"], [ca.toLocaleString(), "with a Canadian site"],
+      [caR.toLocaleString(), "recruiting in Canada now"], [(META.trials_added || 0).toLocaleString(), "new since the previous refresh"]]
+      .map(([n, l]) => `<div class="kpi"><b>${n}</b><span>${l}</span></div>`).join("");
+  }
+
+  // ---------------------------------------------------------------- papers
+  function renderPapers() {
+    const q = $("p-q").value.trim().toLowerCase();
+    const rows = PAPERS.filter(p => (pcat === "All" || p.c.includes(pcat)) &&
+      (!q || [p.t, p.j, p.a].join(" ").toLowerCase().includes(q)));
+    $("pcount").textContent = `${rows.length.toLocaleString()} paper${rows.length === 1 ? "" : "s"}`;
+    $("plist").innerHTML = rows.slice(0, pshown).map(p => `<li>
+      <a class="pt" href="https://pubmed.ncbi.nlm.nih.gov/${esc(p.pmid)}/" target="_blank" rel="noopener">${esc(p.t)}</a>
+      <span class="pm">${esc(p.a)} · <i>${esc(p.j)}</i> · ${esc(p.d)}${p.doi ? ` · <a href="https://doi.org/${esc(p.doi)}" target="_blank" rel="noopener">DOI</a>` : ""}</span>
+      <span>${p.c.map(c => `<span class="tag">${esc(c)}</span>`).join("")}</span></li>`).join("") ||
+      `<li class="empty">No papers match.</li>`;
+    $("pmore").hidden = rows.length <= pshown;
+  }
+  $("pmore").onclick = () => { pshown += 40; renderPapers(); };
+  $("p-q").oninput = () => { pshown = 40; renderPapers(); };
+  function setupPapers() {
+    const cats = ["All", ...(META.feed_queries || []).map(f => f.label)];
+    const el = $("p-cat");
+    el.innerHTML = cats.map(c => `<button class="chip" data-v="${esc(c)}" aria-pressed="${c === pcat}">${esc(c)}${c === "All" ? "" : ` <span style="opacity:.7">${PAPERS.filter(p => p.c.includes(c)).length}</span>`}</button>`).join(" ");
+    el.onclick = (e) => { const b = e.target.closest("button"); if (!b) return; pcat = b.dataset.v; pshown = 40;
+      el.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x.dataset.v === pcat)); renderPapers(); };
+    renderPapers();
+  }
+
+  // ---------------------------------------------------------------- curated
+  function renderCurated(cur) {
+    for (const [key, groups] of Object.entries(cur)) {
+      const host = $("c-" + key); if (!host) continue;
+      host.innerHTML = groups.map(g => `${g.group ? `<h3>${esc(g.group)}</h3>` : ""}<ul class="rlist">${g.items.map(i =>
+        `<li><a href="${esc(i.url)}" target="_blank" rel="noopener"><span class="rname">${esc(i.name)}</span><span class="rdesc">${esc(i.desc)}</span>${i.where ? `<span class="rwhere">${esc(i.where)}</span>` : ""}</a></li>`).join("")}</ul>`).join("");
+    }
+  }
+
+  function stamp() {
+    if (!META.refreshed) { $("stamp").textContent = "Data not yet refreshed."; return; }
+    const d = new Date(META.refreshed);
+    $("stamp").textContent = `Trials and papers refreshed ${d.toLocaleDateString("en-CA", {year: "numeric", month: "long", day: "numeric"})} · ${META.trials_added || 0} new trials and ${META.papers_added || 0} new papers since the previous run.`;
+    $("q-ct").textContent = META.ct_condition || "";
+    $("q-days").textContent = META.feed_days || 120;
+    $("q-pm").innerHTML = (META.feed_queries || []).map(f => `<li><b>${esc(f.label)}</b><span class="pm"><code>${esc(f.query)}</code></span></li>`).join("");
+  }
+
+  async function getJSON(path, fallback) {
+    try { const r = await fetch(path, {cache: "no-cache"}); if (!r.ok) throw 0; return await r.json(); }
+    catch { return fallback; }
+  }
+
+  readHash();
+  Promise.all([getJSON("data/trials.json", []), getJSON("data/papers.json", []), getJSON("data/meta.json", {}), getJSON("curated.json", {})])
+    .then(([t, p, m, c]) => {
+      TRIALS = t; PAPERS = p; META = m;
+      fillSelect($("f-prov"), [...new Set(TRIALS.flatMap(x => x.ca.map(s => s[2])).filter(Boolean))].sort());
+      fillSelect($("f-bm"), count("bm"));
+      fillSelect($("f-mod"), count("mod"));
+      fillSelect($("f-set"), ["Early stage", "Locally advanced", "Advanced or metastatic"].filter(s => TRIALS.some(x => x.set.includes(s))));
+      fillSelect($("f-ph"), Object.keys(PHASE_RANK).filter(ph => TRIALS.some(x => x.ph === ph)).sort((a, b) => PHASE_RANK[a] - PHASE_RANK[b]));
+      setupControls(); kpis(); render(); setupPapers(); renderCurated(c); stamp();
+      if (!TRIALS.length) $("tbody").innerHTML = `<tr><td colspan="7" class="empty">Trial data has not been loaded yet. It appears after the first daily refresh.</td></tr>`;
+    });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+name: Daily refresh
+
+on:
+  schedule:
+    - cron: "17 11 * * *"   # 11:17 UTC, about 6:17 am in Toronto
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - refresh.py
+      - .github/workflows/refresh.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Refresh trials and papers
+        env:
+          NCBI_EMAIL: ${{ secrets.NCBI_EMAIL }}
+        run: python3 refresh.py
+      - name: Commit the new data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No change"
+          else
+            git commit -m "Daily refresh: $(python3 -c "import json;m=json.load(open('data/meta.json'));print(f\"{m['trials']} open trials, {m['papers_added']} new papers\")")"
+            git pull --rebase --quiet
+            git push
+          fi

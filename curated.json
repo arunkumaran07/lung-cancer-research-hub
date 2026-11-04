@@ -1,0 +1,77 @@
+{
+  "data": [
+    {"group": "Genomic and multi-omic data", "items": [
+      {"name": "NCI Genomic Data Commons", "url": "https://gdc.cancer.gov/access-data/gdc-data-portal", "desc": "Harmonized genomic and clinical data, including TCGA lung adenocarcinoma and squamous cell carcinoma, with case filtering, analysis tools and file download.", "where": "United States"},
+      {"name": "cBioPortal for Cancer Genomics", "url": "https://docs.cbioportal.org/about-us/", "desc": "Open-source portal for exploring cancer genomics datasets, maintained by a multi-institutional team that includes Princess Margaret Cancer Centre.", "where": "United States and Canada"},
+      {"name": "ICGC ARGO Data Platform", "url": "https://platform.icgc-argo.org/", "desc": "International Cancer Genome Consortium data on GRCh38 with linked clinical data; controlled data needs DACO approval. Hosted by the Ontario Institute for Cancer Research.", "where": "International, hosted in Canada"},
+      {"name": "ICGC ARGO", "url": "https://www.icgc-argo.org/", "desc": "Consortium programme aiming to analyze specimens from 100,000 cancer patients with high-quality clinical data.", "where": "International"},
+      {"name": "European Genome-phenome Archive", "url": "https://ega-archive.org/", "desc": "Permanent archive for sensitive genetic, phenotypic and clinical research data, released through data access committees.", "where": "Spain and United Kingdom"},
+      {"name": "DepMap Portal", "url": "https://depmap.org/portal/", "desc": "Cancer dependency data (CRISPR screens, omics, drug sensitivity) for more than 2,000 cancer models, including lung cancer cell lines.", "where": "United States"},
+      {"name": "LungMAP", "url": "https://www.lungmap.net/", "desc": "Open molecular and cellular atlas of the human and mouse lung, with single-cell, spatial, imaging and multi-omic data on development and disease.", "where": "United States"},
+      {"name": "TRACERx Lung", "url": "https://tracerx.co.uk/studies/lung/", "desc": "Prospective NSCLC cohort tracking how tumours evolve from diagnosis to relapse, led at UCL and funded mainly by Cancer Research UK.", "where": "United Kingdom"}
+    ]},
+    {"group": "Proteomics", "items": [
+      {"name": "Proteomic Data Commons", "url": "https://datacommons.cancer.gov/repository/proteomic-data-commons", "desc": "Open cancer proteomics data from CPTAC and other programmes, queryable by web interface or API, with analysis tools.", "where": "United States"},
+      {"name": "CPTAC", "url": "https://dctd.cancer.gov/research/networks/cptac", "desc": "NCI Clinical Proteomic Tumor Analysis Consortium, which generates proteogenomic data on tumours including lung adenocarcinoma and squamous cell carcinoma.", "where": "United States"},
+      {"name": "CPTAC genomic data at the GDC", "url": "https://gdc.cancer.gov/about-gdc/contributed-genomic-data-cancer-research/clinical-proteomic-tumor-analysis-consortium-cptac", "desc": "Where CPTAC genomic data sit (GDC) versus its proteomic data (PDC), with the lung studies and access levels listed.", "where": "United States"},
+      {"name": "CPTAC-LUAD imaging collection", "url": "https://portal.imaging.datacommons.cancer.gov/collections/cptac_luad", "desc": "CT, MR, PET and slide images for 244 lung adenocarcinoma subjects, linked to clinical, genomic and proteomic data.", "where": "United States"},
+      {"name": "PRIDE Archive", "url": "https://www.ebi.ac.uk/pride/archive/", "desc": "EMBL-EBI repository of mass spectrometry proteomics datasets.", "where": "United Kingdom"},
+      {"name": "Human Protein Atlas: lung adenocarcinoma", "url": "https://www.proteinatlas.org/humanproteome/cancer/lung+adenocarcinoma", "desc": "Survival-associated genes from TCGA, CPTAC tumour-versus-normal protein levels, and antibody-based protein profiling.", "where": "Sweden"},
+      {"name": "Human Protein Atlas: lung squamous cell carcinoma", "url": "https://www.proteinatlas.org/humanproteome/cancer/lung+squamous+cell+carcinoma", "desc": "The same atlas chapter for squamous cell carcinoma of the lung.", "where": "Sweden"}
+    ]},
+    {"group": "Finding a trial in Canada", "items": [
+      {"name": "Cancer Trials Canada", "url": "https://www.cancertrialscanada.ca/", "desc": "Bilingual national search for cancer trials in Canada, run by the Canadian Cancer Society with Q-CROC and OncoQuébec.", "where": "Canada"},
+      {"name": "Health Canada Clinical Trials Database", "url": "https://clinical-trials-search.canada.ca/en/home", "desc": "Health Canada's list of authorized drug and biologic trials, searchable by condition, status and location.", "where": "Canada"},
+      {"name": "Canadian Cancer Trials Group", "url": "https://www.ctg.queensu.ca/public/about-us", "desc": "National cooperative group running treatment, supportive care and prevention trials, with a thoracic disease site committee.", "where": "Canada"}
+    ]}
+  ],
+  "guidelines": [
+    {"group": "Canada", "items": [
+      {"name": "Ontario Health: lung cancer guidelines", "url": "https://www.cancercareontario.ca/en/guidelines-advice/types-of-cancer/lung", "desc": "Cancer Care Ontario's lung cancer guidance documents, each marked current, archived or in review.", "where": "Ontario"},
+      {"name": "Ontario Lung Screening Program", "url": "https://cancercareontario.ca/node/68831", "desc": "Organized screening for higher-risk people aged 55 to 74 with at least 20 years of daily smoking; referral by a provider or directly to a participating hospital.", "where": "Ontario"},
+      {"name": "Canadian Partnership Against Cancer: lung screening", "url": "https://www.partnershipagainstcancer.ca/topics/lung-cancer-screening-in-canada-2021-2022/key-highlights/", "desc": "Overview of provincial organized lung screening programmes, pilots and standards.", "where": "Canada"}
+    ]},
+    {"group": "International", "items": [
+      {"name": "NCCN Guidelines: NSCLC", "url": "https://www.nccn.org/guidelines/guidelines-detail?category=1&id=1450", "desc": "Current NCCN guidelines for early, locally advanced and metastatic NSCLC; a free account is needed to read them.", "where": "United States"},
+      {"name": "ESMO: lung and chest tumours", "url": "https://esmo.org/Guidelines/Lung-and-Chest-Tumours", "desc": "European guidelines for early and metastatic NSCLC, small cell lung cancer and mesothelioma.", "where": "Europe"},
+      {"name": "ASCO living guideline: stage IV NSCLC without driver alterations", "url": "https://ace.asco.org/guidelines/10201", "desc": "Continually revised treatment recommendations based on ongoing review of randomized trials.", "where": "United States"},
+      {"name": "NCI PDQ: NSCLC treatment (health professional)", "url": "https://www.cancer.gov/types/lung/hp/non-small-cell-lung-treatment-pdq", "desc": "The National Cancer Institute's evidence summary on NSCLC treatment for clinicians.", "where": "United States"},
+      {"name": "IASLC Staging Project", "url": "https://www.iaslc.org/staging", "desc": "Development of the 10th edition TNM staging for lung cancer, thymic tumours and mesothelioma, with 9th edition resources.", "where": "International"}
+    ]}
+  ],
+  "funders": [
+    {"group": "Canada", "items": [
+      {"name": "Lung Cancer Canada: research program", "url": "https://lungcancercanada.ca/about-us/research-program/", "desc": "Breathe Forward Award, Geoffrey Ogram Memorial Research Grant, Lung Ambition Awards and Give a Breath Research Award.", "where": "Canada"},
+      {"name": "Canadian Cancer Society: funding opportunities", "url": "https://cancer.ca/en/research/for-researchers/funding-opportunities", "desc": "Open and upcoming competitions, including Challenge Grants, Emerging Scholar grants and training awards.", "where": "Canada"},
+      {"name": "Terry Fox Research Institute", "url": "https://www.tfri.ca/funding-opportunities", "desc": "New Investigator Awards, New Frontiers Program Project Grants, technology development awards and investigator-initiated clinical trials.", "where": "Canada"},
+      {"name": "Canadian Institutes of Health Research", "url": "https://cihr-irsc.gc.ca/e/49857.html", "desc": "Project and Foundation Grant programmes, training awards, strategic initiatives and the New Frontiers in Research Fund.", "where": "Canada"},
+      {"name": "Lung Health Foundation", "url": "https://hcp.lunghealth.ca/apply-for-a-grant-or-fellowship/", "desc": "Ontario's lung health charity; lists its research awards and posts calls when open.", "where": "Ontario"}
+    ]},
+    {"group": "International", "items": [
+      {"name": "LUNGevity Foundation", "url": "https://www.lungevity.org/learn-about-lungevity/scientific-research/research-funding", "desc": "Translational Research and Career Development Awards in early detection and new therapies.", "where": "United States"},
+      {"name": "Lung Cancer Research Foundation", "url": "https://www.lungcancerresearchfoundation.org/research/funding-opportunities/", "desc": "Annual awards including ALK-positive, small cell, prevention and early detection, and resistance grants.", "where": "United States"},
+      {"name": "IASLC research grants", "url": "https://iaslc.secure-platform.com/researchgrants/", "desc": "Career Advancement, Adi F. Gazdar Fellowship, Young Investigator and translational thoracic oncology grants.", "where": "International"},
+      {"name": "GO2 for Lung Cancer: research grants", "url": "https://go2.org/lung-cancer-research/grants/", "desc": "Young Innovators Team Awards, Young Investigators Program and other lung cancer research awards.", "where": "United States"},
+      {"name": "American Lung Association", "url": "https://www.lung.org/research/awards-and-grants-opportunities", "desc": "Lung Cancer Discovery, Catalyst and Innovation Awards, among others.", "where": "United States"},
+      {"name": "Cancer Research UK: lung cancer research", "url": "https://www.cancerresearchuk.org/our-research/our-research-by-cancer-type/our-research-into-lung-cancer", "desc": "Overview of CRUK's lung cancer research portfolio, including TRACERx.", "where": "United Kingdom"}
+    ]}
+  ],
+  "patients": [
+    {"group": "", "items": [
+      {"name": "Lung Cancer Canada", "url": "https://lungcancercanada.ca/", "desc": "Canadian charity for the lung cancer community: support groups, peer support, healthcare navigation and a free patient guide.", "where": "Canada"},
+      {"name": "Canadian Cancer Society: lung cancer", "url": "https://cancer.ca/en/cancer-information/cancer-types/lung", "desc": "Causes, screening, diagnosis, staging, treatment, supportive care and statistics.", "where": "Canada"},
+      {"name": "GO2 for Lung Cancer", "url": "https://go2.org/", "desc": "Free HelpLine, peer support programmes, education and advocacy.", "where": "United States"},
+      {"name": "LUNGevity Foundation", "url": "https://www.lungevity.org/", "desc": "Helpline, peer mentoring, online communities and resources for survivors and caregivers.", "where": "United States"},
+      {"name": "National Cancer Institute: lung cancer", "url": "https://www.cancer.gov/types/lung", "desc": "Patient information on types, treatment, screening, research advances and supportive care.", "where": "United States"}
+    ]}
+  ],
+  "preprints": [
+    {"group": "", "items": [
+      {"name": "bioRxiv: cancer biology", "url": "https://www.biorxiv.org/collection/cancer-biology", "desc": "Recent cancer biology preprints.", "where": ""},
+      {"name": "medRxiv: oncology", "url": "https://www.medrxiv.org/collection/oncology", "desc": "Recent clinical oncology preprints, with alert sign-up.", "where": ""},
+      {"name": "Research Square", "url": "https://www.researchsquare.com/", "desc": "Preprints and manuscripts under journal review.", "where": ""},
+      {"name": "Zenodo", "url": "https://zenodo.org/", "desc": "Open repository for citable datasets, software and presentations, run by CERN and OpenAIRE.", "where": ""},
+      {"name": "OSF", "url": "https://osf.io/", "desc": "Center for Open Science platform for preregistration, preprints and research records.", "where": ""}
+    ]}
+  ]
+}
