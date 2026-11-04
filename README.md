@@ -13,7 +13,7 @@ not medical advice.
 | File | What it is | Edited by |
 |---|---|---|
 | `index.html` | The page: layout, filters, rendering | hand |
-| `curated.json` | Portals, guidelines, funders, patient and preprint links | hand |
+| `curated.json` | Portals, guidelines, funders, advocacy and preprint links | hand |
 | `refresh.py` | Pulls trials and papers into `data/` | hand |
 | `data/trials.json` | Open lung cancer studies from ClinicalTrials.gov | the daily refresh |
 | `data/papers.json` | Recent PubMed records from the feed searches | the daily refresh |

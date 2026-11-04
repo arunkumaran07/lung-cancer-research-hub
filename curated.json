@@ -56,7 +56,7 @@
       {"name": "Cancer Research UK: lung cancer research", "url": "https://www.cancerresearchuk.org/our-research/our-research-by-cancer-type/our-research-into-lung-cancer", "desc": "Overview of CRUK's lung cancer research portfolio, including TRACERx.", "where": "United Kingdom"}
     ]}
   ],
-  "patients": [
+  "advocacy": [
     {"group": "", "items": [
       {"name": "Lung Cancer Canada", "url": "https://lungcancercanada.ca/", "desc": "Canadian charity for the lung cancer community: support groups, peer support, healthcare navigation and a free patient guide.", "where": "Canada"},
       {"name": "Canadian Cancer Society: lung cancer", "url": "https://cancer.ca/en/cancer-information/cancer-types/lung", "desc": "Causes, screening, diagnosis, staging, treatment, supportive care and statistics.", "where": "Canada"},
