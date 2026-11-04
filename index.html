@@ -173,13 +173,13 @@ code { font-family: var(--font-mono); font-size: 0.82em; background: var(--tag);
   <h2>About this hub</h2>
   <p class="note">Maintained by Arun Kumaran Anguraj Vadivel, Toronto. This page is a research reference, not medical advice; people looking for a trial should discuss options with their care team.</p>
   <h3>How the data are gathered</h3>
-  <p class="note">Every morning a GitHub Action runs <code>refresh.py</code>, which queries the ClinicalTrials.gov API for <code id="q-ct">…</code> with status recruiting or not yet recruiting, and PubMed for the searches below. Trials that leave recruitment drop off the table at the next refresh. Papers stay in the feed for <span id="q-days">120</span> days after PubMed adds them. The curated sections are edited by hand in <code>curated.json</code>.</p>
+  <p class="note">Once every 24 hours, starting at about 6:15 am Toronto time, a GitHub Action runs <code>refresh.py</code>, which queries the ClinicalTrials.gov API for <code id="q-ct">…</code> with status recruiting or not yet recruiting, and PubMed for the searches below. Trials that leave recruitment drop off the table at the next refresh. Papers stay in the feed for <span id="q-days">120</span> days after PubMed adds them. The curated sections are edited by hand in <code>curated.json</code>.</p>
   <ul class="plist" id="q-pm"></ul>
   <h3>Limits</h3>
   <p class="note">ClinicalTrials.gov is the largest registry but not the only one; some Canadian and international studies are listed only in other registries. Automatic tags can miss or mislabel studies, especially basket trials that enrol several tumour types. Publication-type tags in PubMed are added during indexing, so the newest trial reports and guidelines can take several weeks to appear.</p>
 </div></section>
 </main>
-<footer><div class="wrap">Data from ClinicalTrials.gov (U.S. National Library of Medicine) and PubMed. Source code and change history are on GitHub.</div></footer>
+<footer><div class="wrap">Data from ClinicalTrials.gov (U.S. National Library of Medicine) and PubMed. Source code and change history are on <a href="https://github.com/arunkumaran07/lung-cancer-research-hub">GitHub</a>.</div></footer>
 
 <script>
 (() => {

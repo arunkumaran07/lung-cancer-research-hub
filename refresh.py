@@ -385,9 +385,48 @@ def dump(name, obj):
         fh.write("\n")
 
 
+LOCAL_TZ = "America/Toronto"
+DAILY_START_HOUR = 6   # the first refresh of a Toronto day happens at or after 6 am
+
+
+def toronto_now():
+    try:
+        from zoneinfo import ZoneInfo
+        return datetime.now(ZoneInfo(LOCAL_TZ))
+    except Exception:  # noqa: BLE001 - no tz database: fall back to Eastern Standard Time
+        return datetime.now(timezone(timedelta(hours=-5)))
+
+
+def last_refresh():
+    stamp = load("meta.json", {}).get("refreshed")
+    if not stamp:
+        return None
+    return datetime.strptime(stamp, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+
+
+def due_today():
+    """True when no refresh has happened yet this Toronto day and it is past 6 am.
+
+    The workflow is scheduled several times a day because GitHub can delay or
+    drop scheduled runs; this check makes the first run that gets through after
+    6 am do the day's refresh and lets the later ones exit straight away.
+    """
+    now = toronto_now()
+    last = last_refresh()
+    if now.hour < DAILY_START_HOUR:
+        print(f"not due: {now:%H:%M} Toronto time is before {DAILY_START_HOUR}:00")
+        return False
+    if last and last.astimezone(now.tzinfo).date() == now.date():
+        print(f"not due: already refreshed today at {last.astimezone(now.tzinfo):%H:%M} Toronto time")
+        return False
+    return True
+
+
 def main():
     dry = "--dry-run" in sys.argv
     backfill = "--backfill" in sys.argv
+    if "--daily" in sys.argv and not due_today():
+        return
 
     old_trials = {t["id"]: t for t in load("trials.json", [])}
     old_papers = load("papers.json", [])
@@ -398,7 +437,14 @@ def main():
     added = sorted(set(fresh) - set(old_trials))
     closed = sorted(set(old_trials) - set(fresh))
 
-    days = FEED_DAYS if (backfill or not old_papers) else DAILY_LOOKBACK
+    if backfill or not old_papers:
+        days = FEED_DAYS
+    else:
+        # Normally 14 days; after a gap (missed runs, a paused workflow) reach back
+        # to the previous refresh so no paper is skipped.
+        last = last_refresh()
+        gap = (datetime.now(timezone.utc) - last).days + 2 if last else FEED_DAYS
+        days = min(FEED_DAYS, max(DAILY_LOOKBACK, gap))
     papers, new_papers = fetch_papers(old_papers, days)
 
     trials = sorted(fresh.values(), key=lambda t: (t["st"], t["id"]), reverse=False)
