@@ -149,6 +149,45 @@ def biomarkers(text):
     return [name for name, pat in BIOMARKERS if re.search(pat, low)]
 
 
+def settings(text):
+    low = text.lower()
+    return [name for name, pat in SETTINGS if re.search(pat, low)]
+
+
+PROVINCES = {
+    "alberta": "Alberta", "ab": "Alberta", "british columbia": "British Columbia", "bc": "British Columbia",
+    "b.c": "British Columbia", "b.c.": "British Columbia", "manitoba": "Manitoba", "mb": "Manitoba",
+    "new brunswick": "New Brunswick", "nb": "New Brunswick",
+    "newfoundland and labrador": "Newfoundland and Labrador", "newfoundland": "Newfoundland and Labrador",
+    "nl": "Newfoundland and Labrador", "nova scotia": "Nova Scotia", "ns": "Nova Scotia",
+    "ontario": "Ontario", "on": "Ontario", "prince edward island": "Prince Edward Island",
+    "pe": "Prince Edward Island", "pei": "Prince Edward Island", "quebec": "Quebec", "québec": "Quebec",
+    "qc": "Quebec", "saskatchewan": "Saskatchewan", "sk": "Saskatchewan",
+    "northwest territories": "Northwest Territories", "nunavut": "Nunavut", "yukon": "Yukon",
+}
+# Cities that appear without a province in some registry records.
+CITY_PROVINCE = {
+    "toronto": "Ontario", "ottawa": "Ontario", "hamilton": "Ontario", "london": "Ontario",
+    "kingston": "Ontario", "sudbury": "Ontario", "thunder bay": "Ontario", "oshawa": "Ontario",
+    "barrie": "Ontario", "kitchener": "Ontario", "windsor": "Ontario", "newmarket": "Ontario",
+    "brampton": "Ontario", "mississauga": "Ontario",
+    "montreal": "Quebec", "montréal": "Quebec", "quebec city": "Quebec", "québec": "Quebec",
+    "sherbrooke": "Quebec", "laval": "Quebec", "gatineau": "Quebec", "levis": "Quebec", "lévis": "Quebec",
+    "calgary": "Alberta", "edmonton": "Alberta", "vancouver": "British Columbia",
+    "victoria": "British Columbia", "kelowna": "British Columbia", "surrey": "British Columbia",
+    "winnipeg": "Manitoba", "saskatoon": "Saskatchewan", "regina": "Saskatchewan",
+    "halifax": "Nova Scotia", "saint john": "New Brunswick", "moncton": "New Brunswick",
+    "st. john's": "Newfoundland and Labrador", "charlottetown": "Prince Edward Island",
+}
+
+
+def province(state, city):
+    key = (state or "").strip().lower().replace(", canada", "").strip()
+    if key in PROVINCES:
+        return PROVINCES[key]
+    return CITY_PROVINCE.get((city or "").strip().lower(), "Province not listed")
+
+
 def phase_label(phases):
     if not phases:
         return "N/A"
@@ -193,7 +232,7 @@ def parse_study(study):
     for l in locations:
         if (l.get("country") or "") == "Canada":
             ca_sites.append([l.get("facility", "") or "", l.get("city", "") or "",
-                             l.get("state", "") or ""])
+                             province(l.get("state"), l.get("city"))])
     ca_sites.sort(key=lambda s: (s[2], s[1], s[0]))
 
     status = status_mod.get("overallStatus", "")
@@ -207,8 +246,8 @@ def parse_study(study):
         "iv": [n for n in interventions if len(n) <= 70][:4],
         "sub": subtype_of(core),
         "bm": biomarkers(core),
-        "mod": tags(wide, MODALITIES),
-        "set": [n for n, p in SETTINGS if re.search(p, wide.lower())],
+        "mod": tags(core, MODALITIES) or tags(wide, MODALITIES),
+        "set": settings(core) or settings(wide),
         "co": countries,
         "ns": len(locations),
         "ca": ca_sites,
@@ -261,7 +300,7 @@ FEED_QUERIES = [
 ]
 FEED_DAYS = 120        # papers older than this (by PubMed entry date) leave the feed
 DAILY_LOOKBACK = 14    # how far back each daily run searches
-FEED_MAX = 600
+FEED_MAX = 1500
 
 
 def eutils(path, extra):
