@@ -34,5 +34,4 @@ If the 6:17 run is dropped, the next run three hours later does the refresh.
 
 The site is public at **https://arunkumaran07.github.io/lung-cancer-research-hub/**,
 served by GitHub Pages from the `main` branch (root folder) since 4 November 2026.
-Every push to `main`, including the daily data commit, republishes it within a
-minute or two.
+
