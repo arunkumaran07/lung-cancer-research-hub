@@ -31,11 +31,10 @@
 html { scroll-padding-top: 64px; }
 body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.55 var(--font-body); }
 a { color: var(--accent); }
-.wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
-@media (max-width: 640px) { .wrap { padding: 0 16px; } }
+.wrap { width: 100%; margin: 0 auto; padding-left: max(clamp(16px, 3vw, 56px), env(safe-area-inset-left, 0px)); padding-right: max(clamp(16px, 3vw, 56px), env(safe-area-inset-right, 0px)); }
 header.brand { padding: 30px 0 18px; }
 h1 { font-family: var(--font-display); font-weight:600; font-size: clamp(1.7rem, 3.2vw, 2.4rem); line-height:1.1; margin:0 0 6px; letter-spacing:-0.01em; }
-.tagline { color: var(--muted); margin:0; max-width: 72ch; }
+.tagline { color: var(--muted); margin:0; max-width: 96ch; }
 .stamp { color: var(--muted); font-size: 0.84rem; margin-top: 10px; font-variant-numeric: tabular-nums; }
 nav.sections { position: sticky; top:0; z-index:5; background: var(--bg); border-bottom:1px solid var(--line); border-top:1px solid var(--line); }
 nav.sections .wrap { display:flex; gap:24px; overflow-x:auto; padding-top:13px; padding-bottom:13px; }
@@ -44,8 +43,8 @@ nav.sections a:hover { color: var(--accent); }
 section.block { padding: 40px 0; border-bottom: 1px solid var(--line); }
 h2 { font-family: var(--font-display); font-weight:600; font-size: clamp(1.45rem, 3vw, 1.9rem); margin:0 0 6px; letter-spacing:-0.01em; }
 h3 { font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; margin:28px 0 12px; font-weight:700; }
-p.note { color: var(--muted); max-width: 78ch; margin: 0 0 18px; font-size: 0.94rem; }
-.kpis { display:flex; flex-wrap:wrap; gap:28px; margin: 6px 0 22px; }
+p.note { color: var(--muted); max-width: 96ch; margin: 0 0 18px; font-size: 0.94rem; }
+.kpis { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap:24px 56px; margin: 6px 0 22px; }
 .kpi b { display:block; font-family: var(--font-display); font-size: 1.9rem; font-weight:600; line-height:1.1; font-variant-numeric: tabular-nums; }
 .kpi span { color: var(--muted); font-size: 0.84rem; }
 .filters { display:grid; gap:10px; margin-bottom: 14px; }
@@ -92,11 +91,15 @@ code { font-family: var(--font-mono); font-size: 0.82em; background: var(--tag);
 .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
 
 /* Introduction: reading column for prose, tables and lists wider */
-.intro p, .intro ul.trialist { max-width: 74ch; }
+/* Full-width page: prose sits in grid columns so lines stay readable while the width is used */
+.intro > .wrap > p { max-width: 96ch; }
+.igrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 4px 56px; }
+.isub { min-width: 0; }
+.isub p { margin-top: 0; }
 .intro p.lede { font-family: var(--font-display); font-size: clamp(1.1rem, 2.2vw, 1.3rem); line-height: 1.45; margin: 4px 0 12px; text-wrap: pretty; }
 .intro h3.part { font-family: var(--font-display); font-size: clamp(1.2rem, 2.4vw, 1.45rem); text-transform: none; letter-spacing: 0; font-weight: 600; margin: 40px 0 4px; padding-top: 18px; border-top: 1px solid var(--line); }
 .intro h4 { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin: 24px 0 8px; }
-.intro .kpi span { display: block; max-width: 24ch; }
+.intro .kpi span { display: block; max-width: 30ch; }
 sup.cite { font-size: 0.68em; line-height: 0; margin-left: 1px; font-variant-numeric: tabular-nums; }
 sup.cite a { text-decoration: none; }
 sup.cite a:hover { text-decoration: underline; }
@@ -107,8 +110,9 @@ table.subtypes .num { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .thsub { font-weight: 500; letter-spacing: 0.02em; text-transform: none; color: var(--muted); }
 .grp { color: var(--muted); font-size: 0.78rem; }
 p.fine { font-size: 0.84rem; color: var(--muted); margin-top: 10px; }
-ul.trialist { padding-left: 18px; margin: 0; display: grid; gap: 10px; }
-ol.refs { font-size: 0.82rem; color: var(--muted); padding-left: 26px; display: grid; gap: 6px; max-width: 110ch; }
+ul.trialist { padding-left: 18px; margin: 0; display: grid; gap: 10px 56px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); }
+ol.refs { font-size: 0.82rem; color: var(--muted); padding-left: 26px; columns: 2 520px; column-gap: 56px; }
+ol.refs li { break-inside: avoid; margin-bottom: 6px; }
 ol.refs li:target { color: var(--fg); background: var(--accent-soft); }
 @media (max-width: 640px) {
   table.subtypes thead { display: none; }
@@ -173,14 +177,23 @@ ol.refs li:target { color: var(--fg); background: var(--accent-soft); }
   </table></div>
   <p class="fine">Shares are the 2022 estimates for each sex; they do not add up to 100% because only the four main subtypes are shown <sup class="cite"><a href="#ref-6">6</a></sup>. The trial table also tags mesothelioma and thymic tumours; they are not covered here.</p>
 
+  <div class="igrid">
+  <div class="isub">
   <h4>Risk factors</h4>
   <p>Smoking tobacco is the main risk for lung cancer <sup class="cite"><a href="#ref-12">12</a></sup>. In Canada, radon is the second leading cause of lung cancer after smoking and the leading cause in people who do not smoke; Health Canada estimates that it accounts for 16% of lung cancer deaths <sup class="cite"><a href="#ref-13">13</a></sup>. Outdoor air pollution causes lung cancer, and second-hand smoke and some workplace exposures, including asbestos, increase the risk; a first-degree relative with lung cancer may slightly raise risk <sup class="cite"><a href="#ref-12">12</a></sup>. Worldwide, an estimated 114,486 adenocarcinomas in men and 80,378 in women in 2022 were attributable to fine particulate air pollution <sup class="cite"><a href="#ref-6">6</a></sup>.</p>
 
+  </div>
+  <div class="isub">
   <h4>Screening</h4>
   <p>Low-dose CT screening of people at high risk lowers deaths from lung cancer <sup class="cite"><a href="#ref-14">14</a>,<a href="#ref-15">15</a></sup>. In the US National Lung Screening Trial, three annual low-dose CT scans produced a 20% relative reduction in lung cancer mortality compared with chest radiography, although 96.4% of positive CT results were false positives <sup class="cite"><a href="#ref-14">14</a></sup>. In the Dutch and Belgian NELSON trial, volume CT screening of men lowered lung cancer mortality at 10 years compared with no screening (rate ratio 0.76) <sup class="cite"><a href="#ref-15">15</a></sup>. Ontario's organized program accepts referrals of people aged 55 to 74 who have smoked cigarettes daily for at least 20 years (not necessarily in a row) for a risk assessment; not everyone who meets these criteria is eligible for screening <sup class="cite"><a href="#ref-16">16</a></sup>.</p>
 
+  </div>
+  <div class="isub">
   <h4>Diagnosis, testing and staging</h4>
   <p>Molecular testing of the tumour selects patients for targeted drugs, and when tissue is limited or hard to obtain, cell-free DNA from blood can be used to identify a targetable mutation <sup class="cite"><a href="#ref-7">7</a></sup>. Stage is recorded with the TNM classification, which is revised periodically <sup class="cite"><a href="#ref-17">17</a></sup>. The proposals for its ninth edition, built from 76,518 analysable patients, use new subcategories that split N2 lymph node disease into N2a and N2b and M1c metastatic disease into M1c1 and M1c2 <sup class="cite"><a href="#ref-17">17</a></sup>.</p>
+
+  </div>
+  </div>
 
   <h4>Selected trial results</h4>
   <p>Results below are summarized from each publication; all are randomized phase 3 trials except CodeBreaK 100. They are not treatment recommendations, and current Canadian guidance is listed under <a href="#guidelines">Guidelines</a>.</p>
@@ -193,18 +206,29 @@ ol.refs li:target { color: var(--fg); background: var(--accent-soft); }
   </ul>
 
   <h3 class="part">Scientific background</h3>
+  <div class="igrid">
 
+  <div class="isub">
   <h4>The genomic landscape of NSCLC</h4>
   <p>The Cancer Genome Atlas profiled 230 resected lung adenocarcinomas and found a mean of 8.9 mutations per megabase and 18 significantly mutated genes. EGFR mutations were more frequent in women, and MET exon 14 skipping was found in 4% of tumours. MAPK and PI3K pathway activity measured at the protein level was explained by known mutations in only a fraction of cases <sup class="cite"><a href="#ref-29">29</a></sup>. In 178 squamous cell carcinomas the same consortium found mutation of TP53 in nearly all specimens and a potential therapeutic target in most tumours <sup class="cite"><a href="#ref-8">8</a></sup>.</p>
 
+  </div>
+  <div class="isub">
   <h4>Proteogenomics</h4>
   <p>The Clinical Proteomic Tumor Analysis Consortium (CPTAC) added deep proteomics, phosphoproteomics and acetylproteomics to genomic data. In 110 lung adenocarcinomas with 101 matched normal adjacent tissues, it identified therapeutic vulnerabilities linked to KRAS, EGFR and ALK events, reinforced the association of STK11 with immune-cold tumours, and found a smoking-related field effect in the normal tissue <sup class="cite"><a href="#ref-30">30</a></sup>. In squamous cell carcinoma, CPTAC identified NSD3 as an alternative driver in FGFR1-amplified tumours, and its data argue for measuring RB1 protein and phosphorylation before concluding that CDK4/6 inhibition has failed <sup class="cite"><a href="#ref-31">31</a></sup>. CPTAC proteomic data are public through the Proteomic Data Commons <sup class="cite"><a href="#ref-32">32</a></sup>, listed under <a href="#data">Data &amp; portals</a>.</p>
 
+  </div>
+  <div class="isub">
   <h4>Lung cancer in people who never smoked</h4>
   <p>Whole-genome sequencing of 232 lung cancers in never-smokers (the Sherlock-Lung study) found three subtypes defined by copy number changes, named piano, mezzo-forte and forte, and no strong tobacco smoking signatures, even in people exposed to second-hand smoke <sup class="cite"><a href="#ref-33">33</a></sup>. Work on air pollution suggests that fine particulate matter promotes cancer from cells that already carry driver mutations. In mice, pollutants drew macrophages into the lung and triggered release of interleukin-1β, pushing EGFR-mutant cells into a progenitor-like state; in people, EGFR and KRAS driver mutations were found in 18% and 53% of histologically normal lung samples <sup class="cite"><a href="#ref-34">34</a></sup>.</p>
 
+  </div>
+  <div class="isub">
   <h4>Small cell lung cancer biology</h4>
   <p>Loss of TP53 and RB1 is obligatory in SCLC, and inactivating mutations in NOTCH family genes occur in 25% of tumours <sup class="cite"><a href="#ref-10">10</a></sup>. An expression analysis defined four subtypes, SCLC-A, -N and -P, named after ASCL1, NEUROD1 and POU2F3, and an inflamed subtype, SCLC-I. SCLC-I gained the most from adding immunotherapy to chemotherapy, and cisplatin shifted ASCL1-type patient-derived xenografts toward SCLC-I, which suggests subtype switching as a route to platinum resistance <sup class="cite"><a href="#ref-35">35</a></sup>.</p>
+
+  </div>
+  </div>
 
   <h4 id="intro-refs">Sources</h4>
   <ol class="refs">
