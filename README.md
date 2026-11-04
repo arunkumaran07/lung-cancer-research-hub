@@ -82,9 +82,9 @@ python3 -m http.server 8000     # then open http://localhost:8000
 - **Tag rules:** edit `BIOMARKERS`, `MODALITIES` and `SETTINGS` in `refresh.py`.
 - **Paper searches:** edit `FEED_QUERIES`; the labels become the filter chips.
 
-## Going public
+## The live site
 
-GitHub Pages serves private repositories only on paid plans. When the page is
-ready: **Settings → General → Danger Zone → Change visibility → Public**, then
-**Settings → Pages → Source: Deploy from a branch → `main` / `(root)`**. The site
-appears at `https://arunkumaran07.github.io/lung-cancer-research-hub/` within a few minutes.
+The site is public at **https://arunkumaran07.github.io/lung-cancer-research-hub/**,
+served by GitHub Pages from the `main` branch (root folder) since 4 November 2026.
+Every push to `main`, including the daily data commit, republishes it within a
+minute or two.
