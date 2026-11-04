@@ -28,7 +28,7 @@
   --accent:#7FC4BE; --accent-soft:#1E2D2C; --ok:#6FC79B; --warn:#D8A85A; --tag:#222830; color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html { scroll-padding-top: 64px; }
+html { scroll-padding-top: 128px; }
 body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.55 var(--font-body); }
 a { color: var(--accent); }
 .wrap { width: 100%; margin: 0 auto; padding-left: max(clamp(16px, 3vw, 56px), env(safe-area-inset-left, 0px)); padding-right: max(clamp(16px, 3vw, 56px), env(safe-area-inset-right, 0px)); }
@@ -36,11 +36,39 @@ header.brand { padding: 30px 0 18px; }
 h1 { font-family: var(--font-display); font-weight:600; font-size: clamp(1.7rem, 3.2vw, 2.4rem); line-height:1.1; margin:0 0 6px; letter-spacing:-0.01em; }
 .tagline { color: var(--muted); margin:0; max-width: 96ch; }
 .stamp { color: var(--muted); font-size: 0.84rem; margin-top: 10px; font-variant-numeric: tabular-nums; }
-nav.sections { position: sticky; top:0; z-index:5; background: var(--bg); border-bottom:1px solid var(--line); border-top:1px solid var(--line); }
+nav.sections { background: var(--bg); border-bottom:1px solid var(--line); border-top:1px solid var(--line); }
 nav.sections .wrap { display:flex; gap:24px; overflow-x:auto; padding-top:13px; padding-bottom:13px; }
 nav.sections a { color: var(--fg); text-decoration:none; font-weight:700; font-size:0.86rem; letter-spacing:0.05em; text-transform:uppercase; white-space:nowrap; }
 nav.sections a:hover { color: var(--accent); }
 section.block { padding: 40px 0; border-bottom: 1px solid var(--line); }
+[hidden] { display: none !important; }
+/* Sticky top bar: section links plus the site-wide search */
+.topbar { position: sticky; top: 0; z-index: 6; background: var(--bg); }
+.sectbar { border-bottom: 1px solid var(--line); }
+.sectbar .wrap { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; padding-top: 10px; padding-bottom: 10px; }
+#sitesearch { flex: 1 1 340px; max-width: 760px; font-size: 0.95rem; padding: 9px 14px; }
+.searchcount { color: var(--muted); font-size: 0.86rem; flex-basis: 100%; }
+.searchcount:empty { display: none; }
+.searchcount a { text-decoration: none; font-weight: 600; white-space: nowrap; }
+.searchcount a:hover { text-decoration: underline; }
+/* Collapsible sections */
+details.sect > summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; cursor: pointer; list-style: none; padding: 2px 0 4px; }
+details.sect > summary::-webkit-details-marker { display: none; }
+details.sect > summary::before { content: "▸"; color: var(--muted); font-size: 1rem; line-height: 1.5; width: 1em; }
+details.sect[open] > summary::before { content: "▾"; }
+details.sect > summary h2 { margin: 0; }
+details.sect > summary:hover h2, details.sect > summary:focus-visible h2 { color: var(--accent); }
+details.sect > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+.shint { color: var(--muted); font-size: 0.86rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.sbody { padding-top: 14px; }
+section.block:has(details.sect:not([open])) { padding: 18px 0; }
+@media (max-width: 640px) {
+  .sectbar .wrap { gap: 6px; padding-top: 8px; padding-bottom: 8px; }
+  #sitesearch { flex: 1 1 0; min-width: 0; padding: 8px 10px; }
+  .sectbar button.plain { padding: 7px 9px; font-size: 0.8rem; white-space: nowrap; }
+  .xl { display: none; }
+  html { scroll-padding-top: 112px; }
+}
 h2 { font-family: var(--font-display); font-weight:600; font-size: clamp(1.45rem, 3vw, 1.9rem); margin:0 0 6px; letter-spacing:-0.01em; }
 h3 { font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; margin:28px 0 12px; font-weight:700; }
 p.note { color: var(--muted); max-width: 96ch; margin: 0 0 18px; font-size: 0.94rem; }
@@ -92,7 +120,7 @@ code { font-family: var(--font-mono); font-size: 0.82em; background: var(--tag);
 
 /* Introduction: reading column for prose, tables and lists wider */
 /* Full-width page: prose sits in grid columns so lines stay readable while the width is used */
-.intro > .wrap > p { max-width: 96ch; }
+.intro .sbody > p { max-width: 96ch; }
 .igrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 4px 56px; }
 .isub { min-width: 0; }
 .isub p { margin-top: 0; }
@@ -135,15 +163,24 @@ ol.refs li:target { color: var(--fg); background: var(--accent-soft); }
   <div class="stamp" id="stamp">Loading the latest data…</div>
 </div></header>
 
+<div class="topbar">
 <nav class="sections" aria-label="Sections"><div class="wrap">
   <a href="#intro">Introduction</a><a href="#trials">Trials</a><a href="#papers">New papers</a><a href="#data">Data &amp; portals</a>
   <a href="#guidelines">Guidelines</a><a href="#funders">Funders</a><a href="#advocacy">Advocacy</a>
   <a href="#preprints">Preprints</a><a href="#about">About</a>
 </div></nav>
+<div class="sectbar"><div class="wrap">
+  <input type="search" id="sitesearch" placeholder="Search the whole hub: a drug, gene, trial number, author, funder or topic" aria-label="Search the whole hub" autocomplete="off">
+  <button class="plain" type="button" id="expand">Expand<span class="xl"> all</span></button>
+  <button class="plain" type="button" id="collapse">Collapse<span class="xl"> all</span></button>
+  <span class="searchcount" id="searchcount" aria-live="polite"></span>
+</div></div>
+</div>
 
 <main>
 <section class="block intro" id="intro"><div class="wrap">
-  <h2>Introduction to lung cancer</h2>
+<details class="sect" data-sect="intro" open><summary><h2>Introduction to lung cancer</h2><span class="shint" id="hint-intro"></span></summary>
+<div class="sbody">
   <p class="lede">Lung cancer is the most commonly diagnosed cancer in Canada, excluding non-melanoma skin cancers, and the leading cause of cancer death in both men and women <sup class="cite"><a href="#ref-1">1</a></sup>. Worldwide it was the most frequently diagnosed cancer in 2022, with almost 2.5 million new cases, and the leading cause of cancer death, with an estimated 1.8 million deaths <sup class="cite"><a href="#ref-2">2</a></sup>.</p>
   <p class="note">This section is a short clinical and scientific background for readers new to the field. Each statement cites its source, numbered at the end. It is a research reference, not medical advice.</p>
 
@@ -232,46 +269,49 @@ ol.refs li:target { color: var(--fg); background: var(--accent-soft); }
 
   <h4 id="intro-refs">Sources</h4>
   <ol class="refs">
-    <li id="ref-1">Canadian Cancer Society. Lung and bronchus cancer statistics (projected estimates for 2026, from the Canadian Cancer Statistics Advisory Committee, CMAJ 2026). Accessed 4 November 2026. <a href="https://cancer.ca/en/cancer-information/cancer-types/lung/statistics" target="_blank" rel="noopener">Link</a></li>
-    <li id="ref-2">Bray F, et al. Global cancer statistics 2022: GLOBOCAN estimates of incidence and mortality worldwide for 36 cancers in 185 countries. CA Cancer J Clin. 2024;74:229-263. <a href="https://doi.org/10.3322/caac.21834" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/38572751/" target="_blank" rel="noopener">PubMed 38572751</a></li>
-    <li id="ref-3">Statistics Canada. The Daily: Cancer survival statistics, 1992 to 2021. Released 13 August 2025. <a href="https://www150.statcan.gc.ca/n1/daily-quotidien/250813/dq250813a-eng.htm" target="_blank" rel="noopener">Link</a></li>
-    <li id="ref-4">Canadian Cancer Society. What is lung cancer? Accessed 4 November 2026. <a href="https://cancer.ca/en/cancer-information/cancer-types/lung/what-is-lung-cancer" target="_blank" rel="noopener">Link</a></li>
-    <li id="ref-5">Nicholson AG, et al. The 2021 WHO Classification of Lung Tumors: impact of advances since 2015. J Thorac Oncol. 2022;17:362-387. <a href="https://doi.org/10.1016/j.jtho.2021.11.003" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/34808341/" target="_blank" rel="noopener">PubMed 34808341</a></li>
-    <li id="ref-6">Luo G, et al. Estimated worldwide variation and trends in incidence of lung cancer by histological subtype in 2022 and over time: a population-based study. Lancet Respir Med. 2025;13:348-363. <a href="https://doi.org/10.1016/S2213-2600(24)00428-4" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/39914442/" target="_blank" rel="noopener">PubMed 39914442</a></li>
-    <li id="ref-7">Lindeman NI, et al. Updated molecular testing guideline for the selection of lung cancer patients for treatment with targeted tyrosine kinase inhibitors (CAP/IASLC/AMP). J Thorac Oncol. 2018;13:323-358. <a href="https://doi.org/10.1016/j.jtho.2017.12.001" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/29396253/" target="_blank" rel="noopener">PubMed 29396253</a></li>
-    <li id="ref-8">Cancer Genome Atlas Research Network. Comprehensive genomic characterization of squamous cell lung cancers. Nature. 2012;489:519-525. <a href="https://doi.org/10.1038/nature11404" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/22960745/" target="_blank" rel="noopener">PubMed 22960745</a></li>
-    <li id="ref-9">Rudin CM, et al. Small-cell lung cancer. Nat Rev Dis Primers. 2021;7:3. <a href="https://doi.org/10.1038/s41572-020-00235-0" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/33446664/" target="_blank" rel="noopener">PubMed 33446664</a></li>
-    <li id="ref-10">George J, et al. Comprehensive genomic profiles of small cell lung cancer. Nature. 2015;524:47-53. <a href="https://doi.org/10.1038/nature14664" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/26168399/" target="_blank" rel="noopener">PubMed 26168399</a></li>
-    <li id="ref-11">Rudin CM, et al. Molecular subtypes of small cell lung cancer: a synthesis of human and mouse model data. Nat Rev Cancer. 2019;19:289-297. <a href="https://doi.org/10.1038/s41568-019-0133-9" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/30926931/" target="_blank" rel="noopener">PubMed 30926931</a></li>
-    <li id="ref-12">Canadian Cancer Society. Risk factors for lung cancer. Accessed 4 November 2026. <a href="https://cancer.ca/en/cancer-information/cancer-types/lung/risks" target="_blank" rel="noopener">Link</a></li>
-    <li id="ref-13">Health Canada. Justifications and policy rationales for radon action. Modified 12 September 2024. <a href="https://www.canada.ca/en/health-canada/services/health-risks-safety/radiation/radon/action-guides/justification-policy-rationales.html" target="_blank" rel="noopener">Link</a></li>
-    <li id="ref-14">National Lung Screening Trial Research Team. Reduced lung-cancer mortality with low-dose computed tomographic screening. N Engl J Med. 2011;365:395-409. <a href="https://doi.org/10.1056/NEJMoa1102873" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/21714641/" target="_blank" rel="noopener">PubMed 21714641</a></li>
-    <li id="ref-15">de Koning HJ, et al. Reduced lung-cancer mortality with volume CT screening in a randomized trial. N Engl J Med. 2020;382:503-513. <a href="https://doi.org/10.1056/NEJMoa1911793" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/31995683/" target="_blank" rel="noopener">PubMed 31995683</a></li>
-    <li id="ref-16">Ontario Health (Cancer Care Ontario). Ontario Lung Screening Program. Accessed 3 November 2026. <a href="https://cancercareontario.ca/node/68831" target="_blank" rel="noopener">Link</a></li>
-    <li id="ref-17">Rami-Porta R, et al. The IASLC Lung Cancer Staging Project: proposals for revision of the TNM stage groups in the forthcoming (ninth) edition of the TNM classification for lung cancer. J Thorac Oncol. 2024;19:1007-1027. <a href="https://doi.org/10.1016/j.jtho.2024.02.011" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/38447919/" target="_blank" rel="noopener">PubMed 38447919</a></li>
-    <li id="ref-18">Forde PM, et al. Neoadjuvant nivolumab plus chemotherapy in resectable lung cancer (CheckMate 816). N Engl J Med. 2022;386:1973-1985. <a href="https://doi.org/10.1056/NEJMoa2202170" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/35403841/" target="_blank" rel="noopener">PubMed 35403841</a></li>
-    <li id="ref-19">Tsuboi M, et al. Overall survival with osimertinib in resected EGFR-mutated NSCLC (ADAURA). N Engl J Med. 2023;389:137-147. <a href="https://doi.org/10.1056/NEJMoa2304594" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/37272535/" target="_blank" rel="noopener">PubMed 37272535</a></li>
-    <li id="ref-20">Wu YL, et al. Alectinib in resected ALK-positive non-small-cell lung cancer (ALINA). N Engl J Med. 2024;390:1265-1276. <a href="https://doi.org/10.1056/NEJMoa2310532" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/38598794/" target="_blank" rel="noopener">PubMed 38598794</a></li>
-    <li id="ref-21">Antonia SJ, et al. Durvalumab after chemoradiotherapy in stage III non-small-cell lung cancer (PACIFIC). N Engl J Med. 2017;377:1919-1929. <a href="https://doi.org/10.1056/NEJMoa1709937" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/28885881/" target="_blank" rel="noopener">PubMed 28885881</a></li>
-    <li id="ref-22">Soria JC, et al. Osimertinib in untreated EGFR-mutated advanced non-small-cell lung cancer (FLAURA). N Engl J Med. 2018;378:113-125. <a href="https://doi.org/10.1056/NEJMoa1713137" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/29151359/" target="_blank" rel="noopener">PubMed 29151359</a></li>
-    <li id="ref-23">Skoulidis F, et al. Sotorasib for lung cancers with KRAS p.G12C mutation (CodeBreaK 100). N Engl J Med. 2021;384:2371-2381. <a href="https://doi.org/10.1056/NEJMoa2103695" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/34096690/" target="_blank" rel="noopener">PubMed 34096690</a></li>
-    <li id="ref-24">Reck M, et al. Pembrolizumab versus chemotherapy for PD-L1-positive non-small-cell lung cancer (KEYNOTE-024). N Engl J Med. 2016;375:1823-1833. <a href="https://doi.org/10.1056/NEJMoa1606774" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/27718847/" target="_blank" rel="noopener">PubMed 27718847</a></li>
-    <li id="ref-25">Gandhi L, et al. Pembrolizumab plus chemotherapy in metastatic non-small-cell lung cancer (KEYNOTE-189). N Engl J Med. 2018;378:2078-2092. <a href="https://doi.org/10.1056/NEJMoa1801005" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/29658856/" target="_blank" rel="noopener">PubMed 29658856</a></li>
-    <li id="ref-26">Horn L, et al. First-line atezolizumab plus chemotherapy in extensive-stage small-cell lung cancer (IMpower133). N Engl J Med. 2018;379:2220-2229. <a href="https://doi.org/10.1056/NEJMoa1809064" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/30280641/" target="_blank" rel="noopener">PubMed 30280641</a></li>
-    <li id="ref-27">Cheng Y, et al. Durvalumab after chemoradiotherapy in limited-stage small-cell lung cancer (ADRIATIC). N Engl J Med. 2024;391:1313-1327. <a href="https://doi.org/10.1056/NEJMoa2404873" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/39268857/" target="_blank" rel="noopener">PubMed 39268857</a></li>
-    <li id="ref-28">Mountzios G, et al. Tarlatamab in small-cell lung cancer after platinum-based chemotherapy (DeLLphi-304). N Engl J Med. 2025;393:349-361. <a href="https://doi.org/10.1056/NEJMoa2502099" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/40454646/" target="_blank" rel="noopener">PubMed 40454646</a></li>
-    <li id="ref-29">Cancer Genome Atlas Research Network. Comprehensive molecular profiling of lung adenocarcinoma. Nature. 2014;511:543-550. <a href="https://doi.org/10.1038/nature13385" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/25079552/" target="_blank" rel="noopener">PubMed 25079552</a></li>
-    <li id="ref-30">Gillette MA, et al. Proteogenomic characterization reveals therapeutic vulnerabilities in lung adenocarcinoma. Cell. 2020;182:200-225. <a href="https://doi.org/10.1016/j.cell.2020.06.013" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/32649874/" target="_blank" rel="noopener">PubMed 32649874</a></li>
-    <li id="ref-31">Satpathy S, et al. A proteogenomic portrait of lung squamous cell carcinoma. Cell. 2021;184:4348-4371. <a href="https://doi.org/10.1016/j.cell.2021.07.016" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/34358469/" target="_blank" rel="noopener">PubMed 34358469</a></li>
-    <li id="ref-32">National Cancer Institute, Cancer Research Data Commons. Proteomic Data Commons. Accessed 3 November 2026. <a href="https://datacommons.cancer.gov/repository/proteomic-data-commons" target="_blank" rel="noopener">Link</a></li>
-    <li id="ref-33">Zhang T, et al. Genomic and evolutionary classification of lung cancer in never smokers. Nat Genet. 2021;53:1348-1359. <a href="https://doi.org/10.1038/s41588-021-00920-0" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/34493867/" target="_blank" rel="noopener">PubMed 34493867</a></li>
-    <li id="ref-34">Hill W, et al. Lung adenocarcinoma promotion by air pollutants. Nature. 2023;616:159-167. <a href="https://doi.org/10.1038/s41586-023-05874-3" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/37020004/" target="_blank" rel="noopener">PubMed 37020004</a></li>
-    <li id="ref-35">Gay CM, et al. Patterns of transcription factor programs and immune pathway activation define four major subtypes of SCLC with distinct therapeutic vulnerabilities. Cancer Cell. 2021;39:346-360. <a href="https://doi.org/10.1016/j.ccell.2020.12.014" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/33482121/" target="_blank" rel="noopener">PubMed 33482121</a></li>
+    <li id="ref-1" value="1">Canadian Cancer Society. Lung and bronchus cancer statistics (projected estimates for 2026, from the Canadian Cancer Statistics Advisory Committee, CMAJ 2026). Accessed 4 November 2026. <a href="https://cancer.ca/en/cancer-information/cancer-types/lung/statistics" target="_blank" rel="noopener">Link</a></li>
+    <li id="ref-2" value="2">Bray F, et al. Global cancer statistics 2022: GLOBOCAN estimates of incidence and mortality worldwide for 36 cancers in 185 countries. CA Cancer J Clin. 2024;74:229-263. <a href="https://doi.org/10.3322/caac.21834" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/38572751/" target="_blank" rel="noopener">PubMed 38572751</a></li>
+    <li id="ref-3" value="3">Statistics Canada. The Daily: Cancer survival statistics, 1992 to 2021. Released 13 August 2025. <a href="https://www150.statcan.gc.ca/n1/daily-quotidien/250813/dq250813a-eng.htm" target="_blank" rel="noopener">Link</a></li>
+    <li id="ref-4" value="4">Canadian Cancer Society. What is lung cancer? Accessed 4 November 2026. <a href="https://cancer.ca/en/cancer-information/cancer-types/lung/what-is-lung-cancer" target="_blank" rel="noopener">Link</a></li>
+    <li id="ref-5" value="5">Nicholson AG, et al. The 2021 WHO Classification of Lung Tumors: impact of advances since 2015. J Thorac Oncol. 2022;17:362-387. <a href="https://doi.org/10.1016/j.jtho.2021.11.003" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/34808341/" target="_blank" rel="noopener">PubMed 34808341</a></li>
+    <li id="ref-6" value="6">Luo G, et al. Estimated worldwide variation and trends in incidence of lung cancer by histological subtype in 2022 and over time: a population-based study. Lancet Respir Med. 2025;13:348-363. <a href="https://doi.org/10.1016/S2213-2600(24)00428-4" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/39914442/" target="_blank" rel="noopener">PubMed 39914442</a></li>
+    <li id="ref-7" value="7">Lindeman NI, et al. Updated molecular testing guideline for the selection of lung cancer patients for treatment with targeted tyrosine kinase inhibitors (CAP/IASLC/AMP). J Thorac Oncol. 2018;13:323-358. <a href="https://doi.org/10.1016/j.jtho.2017.12.001" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/29396253/" target="_blank" rel="noopener">PubMed 29396253</a></li>
+    <li id="ref-8" value="8">Cancer Genome Atlas Research Network. Comprehensive genomic characterization of squamous cell lung cancers. Nature. 2012;489:519-525. <a href="https://doi.org/10.1038/nature11404" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/22960745/" target="_blank" rel="noopener">PubMed 22960745</a></li>
+    <li id="ref-9" value="9">Rudin CM, et al. Small-cell lung cancer. Nat Rev Dis Primers. 2021;7:3. <a href="https://doi.org/10.1038/s41572-020-00235-0" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/33446664/" target="_blank" rel="noopener">PubMed 33446664</a></li>
+    <li id="ref-10" value="10">George J, et al. Comprehensive genomic profiles of small cell lung cancer. Nature. 2015;524:47-53. <a href="https://doi.org/10.1038/nature14664" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/26168399/" target="_blank" rel="noopener">PubMed 26168399</a></li>
+    <li id="ref-11" value="11">Rudin CM, et al. Molecular subtypes of small cell lung cancer: a synthesis of human and mouse model data. Nat Rev Cancer. 2019;19:289-297. <a href="https://doi.org/10.1038/s41568-019-0133-9" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/30926931/" target="_blank" rel="noopener">PubMed 30926931</a></li>
+    <li id="ref-12" value="12">Canadian Cancer Society. Risk factors for lung cancer. Accessed 4 November 2026. <a href="https://cancer.ca/en/cancer-information/cancer-types/lung/risks" target="_blank" rel="noopener">Link</a></li>
+    <li id="ref-13" value="13">Health Canada. Justifications and policy rationales for radon action. Modified 12 September 2024. <a href="https://www.canada.ca/en/health-canada/services/health-risks-safety/radiation/radon/action-guides/justification-policy-rationales.html" target="_blank" rel="noopener">Link</a></li>
+    <li id="ref-14" value="14">National Lung Screening Trial Research Team. Reduced lung-cancer mortality with low-dose computed tomographic screening. N Engl J Med. 2011;365:395-409. <a href="https://doi.org/10.1056/NEJMoa1102873" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/21714641/" target="_blank" rel="noopener">PubMed 21714641</a></li>
+    <li id="ref-15" value="15">de Koning HJ, et al. Reduced lung-cancer mortality with volume CT screening in a randomized trial. N Engl J Med. 2020;382:503-513. <a href="https://doi.org/10.1056/NEJMoa1911793" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/31995683/" target="_blank" rel="noopener">PubMed 31995683</a></li>
+    <li id="ref-16" value="16">Ontario Health (Cancer Care Ontario). Ontario Lung Screening Program. Accessed 3 November 2026. <a href="https://cancercareontario.ca/node/68831" target="_blank" rel="noopener">Link</a></li>
+    <li id="ref-17" value="17">Rami-Porta R, et al. The IASLC Lung Cancer Staging Project: proposals for revision of the TNM stage groups in the forthcoming (ninth) edition of the TNM classification for lung cancer. J Thorac Oncol. 2024;19:1007-1027. <a href="https://doi.org/10.1016/j.jtho.2024.02.011" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/38447919/" target="_blank" rel="noopener">PubMed 38447919</a></li>
+    <li id="ref-18" value="18">Forde PM, et al. Neoadjuvant nivolumab plus chemotherapy in resectable lung cancer (CheckMate 816). N Engl J Med. 2022;386:1973-1985. <a href="https://doi.org/10.1056/NEJMoa2202170" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/35403841/" target="_blank" rel="noopener">PubMed 35403841</a></li>
+    <li id="ref-19" value="19">Tsuboi M, et al. Overall survival with osimertinib in resected EGFR-mutated NSCLC (ADAURA). N Engl J Med. 2023;389:137-147. <a href="https://doi.org/10.1056/NEJMoa2304594" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/37272535/" target="_blank" rel="noopener">PubMed 37272535</a></li>
+    <li id="ref-20" value="20">Wu YL, et al. Alectinib in resected ALK-positive non-small-cell lung cancer (ALINA). N Engl J Med. 2024;390:1265-1276. <a href="https://doi.org/10.1056/NEJMoa2310532" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/38598794/" target="_blank" rel="noopener">PubMed 38598794</a></li>
+    <li id="ref-21" value="21">Antonia SJ, et al. Durvalumab after chemoradiotherapy in stage III non-small-cell lung cancer (PACIFIC). N Engl J Med. 2017;377:1919-1929. <a href="https://doi.org/10.1056/NEJMoa1709937" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/28885881/" target="_blank" rel="noopener">PubMed 28885881</a></li>
+    <li id="ref-22" value="22">Soria JC, et al. Osimertinib in untreated EGFR-mutated advanced non-small-cell lung cancer (FLAURA). N Engl J Med. 2018;378:113-125. <a href="https://doi.org/10.1056/NEJMoa1713137" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/29151359/" target="_blank" rel="noopener">PubMed 29151359</a></li>
+    <li id="ref-23" value="23">Skoulidis F, et al. Sotorasib for lung cancers with KRAS p.G12C mutation (CodeBreaK 100). N Engl J Med. 2021;384:2371-2381. <a href="https://doi.org/10.1056/NEJMoa2103695" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/34096690/" target="_blank" rel="noopener">PubMed 34096690</a></li>
+    <li id="ref-24" value="24">Reck M, et al. Pembrolizumab versus chemotherapy for PD-L1-positive non-small-cell lung cancer (KEYNOTE-024). N Engl J Med. 2016;375:1823-1833. <a href="https://doi.org/10.1056/NEJMoa1606774" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/27718847/" target="_blank" rel="noopener">PubMed 27718847</a></li>
+    <li id="ref-25" value="25">Gandhi L, et al. Pembrolizumab plus chemotherapy in metastatic non-small-cell lung cancer (KEYNOTE-189). N Engl J Med. 2018;378:2078-2092. <a href="https://doi.org/10.1056/NEJMoa1801005" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/29658856/" target="_blank" rel="noopener">PubMed 29658856</a></li>
+    <li id="ref-26" value="26">Horn L, et al. First-line atezolizumab plus chemotherapy in extensive-stage small-cell lung cancer (IMpower133). N Engl J Med. 2018;379:2220-2229. <a href="https://doi.org/10.1056/NEJMoa1809064" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/30280641/" target="_blank" rel="noopener">PubMed 30280641</a></li>
+    <li id="ref-27" value="27">Cheng Y, et al. Durvalumab after chemoradiotherapy in limited-stage small-cell lung cancer (ADRIATIC). N Engl J Med. 2024;391:1313-1327. <a href="https://doi.org/10.1056/NEJMoa2404873" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/39268857/" target="_blank" rel="noopener">PubMed 39268857</a></li>
+    <li id="ref-28" value="28">Mountzios G, et al. Tarlatamab in small-cell lung cancer after platinum-based chemotherapy (DeLLphi-304). N Engl J Med. 2025;393:349-361. <a href="https://doi.org/10.1056/NEJMoa2502099" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/40454646/" target="_blank" rel="noopener">PubMed 40454646</a></li>
+    <li id="ref-29" value="29">Cancer Genome Atlas Research Network. Comprehensive molecular profiling of lung adenocarcinoma. Nature. 2014;511:543-550. <a href="https://doi.org/10.1038/nature13385" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/25079552/" target="_blank" rel="noopener">PubMed 25079552</a></li>
+    <li id="ref-30" value="30">Gillette MA, et al. Proteogenomic characterization reveals therapeutic vulnerabilities in lung adenocarcinoma. Cell. 2020;182:200-225. <a href="https://doi.org/10.1016/j.cell.2020.06.013" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/32649874/" target="_blank" rel="noopener">PubMed 32649874</a></li>
+    <li id="ref-31" value="31">Satpathy S, et al. A proteogenomic portrait of lung squamous cell carcinoma. Cell. 2021;184:4348-4371. <a href="https://doi.org/10.1016/j.cell.2021.07.016" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/34358469/" target="_blank" rel="noopener">PubMed 34358469</a></li>
+    <li id="ref-32" value="32">National Cancer Institute, Cancer Research Data Commons. Proteomic Data Commons. Accessed 3 November 2026. <a href="https://datacommons.cancer.gov/repository/proteomic-data-commons" target="_blank" rel="noopener">Link</a></li>
+    <li id="ref-33" value="33">Zhang T, et al. Genomic and evolutionary classification of lung cancer in never smokers. Nat Genet. 2021;53:1348-1359. <a href="https://doi.org/10.1038/s41588-021-00920-0" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/34493867/" target="_blank" rel="noopener">PubMed 34493867</a></li>
+    <li id="ref-34" value="34">Hill W, et al. Lung adenocarcinoma promotion by air pollutants. Nature. 2023;616:159-167. <a href="https://doi.org/10.1038/s41586-023-05874-3" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/37020004/" target="_blank" rel="noopener">PubMed 37020004</a></li>
+    <li id="ref-35" value="35">Gay CM, et al. Patterns of transcription factor programs and immune pathway activation define four major subtypes of SCLC with distinct therapeutic vulnerabilities. Cancer Cell. 2021;39:346-360. <a href="https://doi.org/10.1016/j.ccell.2020.12.014" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/33482121/" target="_blank" rel="noopener">PubMed 33482121</a></li>
   </ol>
   <p class="fine">Written 4 November 2026. Figures are the estimates for the year each source states.</p>
+
+</div></details>
 </div></section>
 <section class="block" id="trials"><div class="wrap">
-  <h2>Open clinical trials</h2>
+<details class="sect" data-sect="trials"><summary><h2>Open clinical trials</h2><span class="shint" id="hint-trials"></span></summary>
+<div class="sbody">
   <p class="note">Studies registered on ClinicalTrials.gov that are recruiting or not yet recruiting. The view opens on trials with at least one Canadian site; switch to the United States or worldwide below. Subtype, biomarker, modality and setting tags are assigned automatically from each record's title, conditions and interventions, so always confirm eligibility on the registry page.</p>
   <div class="kpis" id="kpis"></div>
 
@@ -310,37 +350,65 @@ ol.refs li:target { color: var(--fg); background: var(--accent-soft); }
     <tbody id="tbody"><tr><td colspan="7" class="empty">Loading trials…</td></tr></tbody>
   </table></div>
   <div class="pager" id="pager"></div>
+
+</div></details>
 </div></section>
 
 <section class="block" id="papers"><div class="wrap">
-  <h2>New papers</h2>
+<details class="sect" data-sect="papers"><summary><h2>New papers</h2><span class="shint" id="hint-papers"></span></summary>
+<div class="sbody">
   <p class="note">PubMed records added in the last few months that match one of five standing searches. Every search requires a lung cancer term; the exact queries are listed under About. A paper can appear under more than one heading.</p>
   <div class="filters"><div class="frow"><span id="p-cat"></span></div>
     <div class="frow"><input type="search" id="p-q" placeholder="Search titles, journals, authors…" aria-label="Search papers"></div></div>
   <div class="resultbar"><span id="pcount">–</span></div>
   <ul class="plist" id="plist"></ul>
   <div class="pager"><button class="plain" id="pmore" hidden>Show more</button></div>
+
+</div></details>
 </div></section>
 
-<section class="block" id="data"><div class="wrap"><h2>Data &amp; portals</h2>
-  <p class="note">Public genomic, proteomic and clinical data resources that hold lung cancer data, and trial finders.</p><div id="c-data"></div></div></section>
-<section class="block" id="guidelines"><div class="wrap"><h2>Guidelines &amp; clinical reference</h2>
-  <p class="note">Treatment and screening guidance. Some publishers require a free account to read the full documents.</p><div id="c-guidelines"></div></div></section>
-<section class="block" id="funders"><div class="wrap"><h2>Funders &amp; grants</h2>
-  <p class="note">Organizations that fund lung cancer research. Programs and deadlines change, so check each funder's page for current calls.</p><div id="c-funders"></div></div></section>
-<section class="block" id="advocacy"><div class="wrap"><h2>Advocacy</h2>
-  <p class="note">Information and support for people affected by lung cancer and their families.</p><div id="c-advocacy"></div></div></section>
-<section class="block" id="preprints"><div class="wrap"><h2>Preprints &amp; open science</h2>
-  <p class="note">Preprint servers and repositories. Preprints have not been peer reviewed.</p><div id="c-preprints"></div></div></section>
+<section class="block" id="data"><div class="wrap">
+<details class="sect" data-sect="data"><summary><h2>Data &amp; portals</h2><span class="shint" id="hint-data"></span></summary>
+<div class="sbody">
+  <p class="note">Public genomic, proteomic and clinical data resources that hold lung cancer data, and trial finders.</p><div id="c-data"></div>
+</div></details>
+</div></section>
+<section class="block" id="guidelines"><div class="wrap">
+<details class="sect" data-sect="guidelines"><summary><h2>Guidelines &amp; clinical reference</h2><span class="shint" id="hint-guidelines"></span></summary>
+<div class="sbody">
+  <p class="note">Treatment and screening guidance. Some publishers require a free account to read the full documents.</p><div id="c-guidelines"></div>
+</div></details>
+</div></section>
+<section class="block" id="funders"><div class="wrap">
+<details class="sect" data-sect="funders"><summary><h2>Funders &amp; grants</h2><span class="shint" id="hint-funders"></span></summary>
+<div class="sbody">
+  <p class="note">Organizations that fund lung cancer research. Programs and deadlines change, so check each funder's page for current calls.</p><div id="c-funders"></div>
+</div></details>
+</div></section>
+<section class="block" id="advocacy"><div class="wrap">
+<details class="sect" data-sect="advocacy"><summary><h2>Advocacy</h2><span class="shint" id="hint-advocacy"></span></summary>
+<div class="sbody">
+  <p class="note">Information and support for people affected by lung cancer and their families.</p><div id="c-advocacy"></div>
+</div></details>
+</div></section>
+<section class="block" id="preprints"><div class="wrap">
+<details class="sect" data-sect="preprints"><summary><h2>Preprints &amp; open science</h2><span class="shint" id="hint-preprints"></span></summary>
+<div class="sbody">
+  <p class="note">Preprint servers and repositories. Preprints have not been peer reviewed.</p><div id="c-preprints"></div>
+</div></details>
+</div></section>
 
 <section class="block" id="about"><div class="wrap">
-  <h2>About this hub</h2>
+<details class="sect" data-sect="about"><summary><h2>About this hub</h2><span class="shint" id="hint-about"></span></summary>
+<div class="sbody">
   <p class="note">Maintained by Arun Kumaran Anguraj Vadivel, Toronto. This page is a research reference, not medical advice; people looking for a trial should discuss options with their care team.</p>
   <h3>How the data are gathered</h3>
   <p class="note">Once every 24 hours, starting at about 6:15 am Toronto time, a GitHub Action runs <code>refresh.py</code>, which queries the ClinicalTrials.gov API for <code id="q-ct">…</code> with status recruiting or not yet recruiting, and PubMed for the searches below. Trials that leave recruitment drop off the table at the next refresh. Papers stay in the feed for <span id="q-days">120</span> days after PubMed adds them. The curated sections are edited by hand in <code>curated.json</code>.</p>
   <ul class="plist" id="q-pm"></ul>
   <h3>Limits</h3>
   <p class="note">ClinicalTrials.gov is the largest registry but not the only one; some Canadian and international studies are listed only in other registries. Automatic tags can miss or mislabel studies, especially basket trials that enrol several tumour types. Publication-type tags in PubMed are added during indexing, so the newest trial reports and guidelines can take several weeks to appear.</p>
+
+</div></details>
 </div></section>
 </main>
 <footer><div class="wrap">Data from ClinicalTrials.gov (U.S. National Library of Medicine) and PubMed. Source code and change history are on <a href="https://github.com/arunkumaran07/lung-cancer-research-hub">GitHub</a>.</div></footer>
@@ -358,6 +426,8 @@ ol.refs li:target { color: var(--fg); background: var(--accent-soft); }
   let S = {...DEFAULTS};
   let TRIALS = [], PAPERS = [], META = {};
   let pcat = "All", pshown = 40;
+  let siteWords = [];
+  const hitAll = (text, ws) => { const t = String(text).toLowerCase(); return ws.every(w => t.includes(w)); };
 
   function readHash() {
     const h = new URLSearchParams(location.hash.slice(1));
@@ -405,6 +475,8 @@ ol.refs li:target { color: var(--fg); background: var(--accent-soft); }
       const hay = [t.id, t.t, t.sp, t.iv.join(" "), t.co.join(" "), t.ca.flat().join(" ")].join(" ").toLowerCase();
       if (!S.q.toLowerCase().split(/\s+/).filter(Boolean).every(w => hay.includes(w))) return false;
     }
+    if (siteWords.length && !hitAll([t.id, t.t, t.sp, t.iv.join(" "), t.co.join(" "), t.ca.flat().join(" "),
+        t.sub.join(" "), t.bm.join(" "), t.mod.join(" "), t.set.join(" ")].join(" "), siteWords)) return false;
     return true;
   }
   function sorted(rows) {
@@ -497,7 +569,9 @@ ol.refs li:target { color: var(--fg); background: var(--accent-soft); }
   function renderPapers() {
     const q = $("p-q").value.trim().toLowerCase();
     const rows = PAPERS.filter(p => (pcat === "All" || p.c.includes(pcat)) &&
-      (!q || [p.t, p.j, p.a].join(" ").toLowerCase().includes(q)));
+      (!q || [p.t, p.j, p.a].join(" ").toLowerCase().includes(q)) &&
+      (!siteWords.length || hitAll([p.t, p.j, p.a, p.c.join(" ")].join(" "), siteWords)));
+    renderPapers.n = rows.length;
     $("pcount").textContent = `${rows.length.toLocaleString()} paper${rows.length === 1 ? "" : "s"}`;
     $("plist").innerHTML = rows.slice(0, pshown).map(p => `<li>
       <a class="pt" href="https://pubmed.ncbi.nlm.nih.gov/${esc(p.pmid)}/" target="_blank" rel="noopener">${esc(p.t)}</a>
@@ -521,8 +595,8 @@ ol.refs li:target { color: var(--fg); background: var(--accent-soft); }
   function renderCurated(cur) {
     for (const [key, groups] of Object.entries(cur)) {
       const host = $("c-" + key); if (!host) continue;
-      host.innerHTML = groups.map(g => `${g.group ? `<h3>${esc(g.group)}</h3>` : ""}<ul class="rlist">${g.items.map(i =>
-        `<li><a href="${esc(i.url)}" target="_blank" rel="noopener"><span class="rname">${esc(i.name)}</span><span class="rdesc">${esc(i.desc)}</span>${i.where ? `<span class="rwhere">${esc(i.where)}</span>` : ""}</a></li>`).join("")}</ul>`).join("");
+      host.innerHTML = groups.map(g => `<div class="rgroup">${g.group ? `<h3>${esc(g.group)}</h3>` : ""}<ul class="rlist">${g.items.map(i =>
+        `<li><a href="${esc(i.url)}" target="_blank" rel="noopener"><span class="rname">${esc(i.name)}</span><span class="rdesc">${esc(i.desc)}</span>${i.where ? `<span class="rwhere">${esc(i.where)}</span>` : ""}</a></li>`).join("")}</ul></div>`).join("");
     }
   }
 
@@ -540,6 +614,134 @@ ol.refs li:target { color: var(--fg); background: var(--accent-soft); }
     catch { return fallback; }
   }
 
+
+  // ---------------------------------------------------------------- collapsible sections
+  // Each viewer's open and closed sections are remembered in their own browser where
+  // storage is allowed; the page works the same without it.
+  const SECT_KEY = "lunghub.sections";
+  const CURATED = ["data", "guidelines", "funders", "advocacy", "preprints"];
+  const LABELS = {intro: "Introduction", trials: "Trials", papers: "New papers", data: "Data & portals",
+    guidelines: "Guidelines", funders: "Funders", advocacy: "Advocacy", preprints: "Preprints", about: "About"};
+  const sects = () => [...document.querySelectorAll("details.sect")];
+  function saveSects() {
+    if (siteWords.length) return;   // search opens and closes sections; do not remember that
+    try { const o = {}; sects().forEach(d => { o[d.dataset.sect] = d.open; }); localStorage.setItem(SECT_KEY, JSON.stringify(o)); }
+    catch { /* private window or blocked storage */ }
+  }
+  function restoreSects() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(SECT_KEY) || "null");
+      if (saved) sects().forEach(d => { if (d.dataset.sect in saved) d.open = !!saved[d.dataset.sect]; });
+    } catch { /* unreadable storage */ }
+  }
+  function openSection(id, scroll) {
+    const sec = document.getElementById(id);
+    const d = sec && sec.querySelector("details.sect");
+    if (!d) return false;
+    if (!d.open) d.open = true;
+    saveSects();
+    if (scroll) requestAnimationFrame(() => sec.scrollIntoView({block: "start"}));
+    return true;
+  }
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const sec = document.getElementById(a.getAttribute("href").slice(1));
+    if (sec && sec.matches("section.block")) { e.preventDefault(); openSection(sec.id, true); }
+  });
+  $("expand").onclick = () => { sects().forEach(d => { d.open = true; }); saveSects(); };
+  $("collapse").onclick = () => { sects().forEach(d => { d.open = false; }); saveSects(); };
+
+  function setHints(counts) {
+    const set = (id, txt) => { const el = $("hint-" + id); if (el) el.textContent = txt; };
+    if (counts) {
+      for (const id of Object.keys(LABELS)) {
+        const n = counts[id] || 0;
+        set(id, n ? `${n.toLocaleString()} matching` + (id === "trials" && S.where !== "ALL" ? ` in the ${S.where === "CA" ? "Canada" : "United States"} view` : "") : "");
+      }
+      return;
+    }
+    set("intro", `${document.querySelectorAll("#intro ol.refs > li").length} sources`);
+    set("trials", `${TRIALS.length.toLocaleString()} open · ${TRIALS.filter(t => t.ca.length).length.toLocaleString()} with a Canadian site`);
+    set("papers", `${PAPERS.length.toLocaleString()} papers from the last ${META.feed_days || 120} days`);
+    CURATED.forEach(k => { const h = $("c-" + k); set(k, h ? `${h.querySelectorAll("li").length} links` : ""); });
+    set("about", "");
+  }
+
+  // ---------------------------------------------------------------- site-wide search
+  // One box for the whole page: it filters the trial table, the paper feed, the
+  // resource cards and the introduction, opens the sections that still have
+  // something to show, hides the rest, and puts everything back when emptied.
+  function filterIntro() {
+    const body = document.querySelector("#intro .sbody");
+    if (!body) return 0;
+    const on = siteWords.length > 0;
+    let n = 0;
+    body.querySelectorAll(".isub, table.subtypes tbody tr, ul.trialist > li, ol.refs > li").forEach(u => {
+      const hit = !on || hitAll(u.textContent, siteWords);
+      u.hidden = !hit;
+      if (on && hit) n++;
+    });
+    [...body.children].forEach(el => {
+      if (!on) { el.hidden = false; return; }
+      el.hidden = el.matches(".tablewrap, ul.trialist, ol.refs, .igrid")
+        ? !el.querySelector("tbody tr:not([hidden]), li:not([hidden]), .isub:not([hidden])") : true;
+    });
+    if (on) [...body.children].forEach(el => {
+      if (el.hidden || !el.matches(".tablewrap, ul.trialist, ol.refs")) return;
+      let h = el.previousElementSibling;
+      while (h && h.tagName !== "H4") h = h.previousElementSibling;
+      if (h) h.hidden = false;
+    });
+    return n;
+  }
+  function filterCurated(key) {
+    const host = $("c-" + key);
+    if (!host) return 0;
+    const on = siteWords.length > 0;
+    let n = 0;
+    host.querySelectorAll(".rgroup").forEach(g => {
+      let gn = 0;
+      g.querySelectorAll("li").forEach(li => { const hit = !on || hitAll(li.textContent, siteWords); li.hidden = !hit; if (hit) gn++; });
+      g.hidden = on && gn === 0;
+      if (on) n += gn;
+    });
+    return n;
+  }
+  let beforeSearch = null;
+  function runSearch() {
+    const had = siteWords.length > 0;
+    siteWords = $("sitesearch").value.toLowerCase().split(/\s+/).filter(Boolean);
+    const on = siteWords.length > 0;
+    if (on && !had) beforeSearch = sects().map(d => d.open);
+    S.page = 1; render();
+    pshown = 40; renderPapers();
+    const counts = {intro: filterIntro(), trials: on ? (render.rows || []).length : 0, papers: on ? renderPapers.n : 0};
+    CURATED.forEach(k => { counts[k] = filterCurated(k); });
+    sects().forEach((d, i) => {
+      const sec = d.closest("section.block");
+      if (on) { const n = counts[sec.id] || 0; sec.hidden = n === 0; d.open = n > 0; }
+      else { sec.hidden = false; if (beforeSearch) d.open = beforeSearch[i]; }
+    });
+    setHints(on ? counts : undefined);
+    const hits = Object.entries(counts).filter(([, n]) => n);
+    const total = hits.reduce((a, [, n]) => a + n, 0);
+    $("searchcount").innerHTML = !on ? "" : total
+      ? `${total.toLocaleString()} match${total === 1 ? "" : "es"}: ` + hits.map(([id, n]) => `<a href="#${id}">${esc(LABELS[id])} ${n.toLocaleString()}</a>`).join(" · ")
+        + (S.where !== "ALL" ? ` <span>(trials searched in the ${S.where === "CA" ? "Canada" : "United States"} view; switch to Worldwide under Trials to search all)</span>` : "")
+      : "No matches. Try fewer or different words.";
+    if (!on) beforeSearch = null;
+  }
+  let siteTimer;
+  $("sitesearch").addEventListener("input", () => { clearTimeout(siteTimer); siteTimer = setTimeout(runSearch, 160); });
+  $("sitesearch").addEventListener("keydown", (e) => { if (e.key === "Escape") { $("sitesearch").value = ""; runSearch(); } });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "/" && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) { e.preventDefault(); $("sitesearch").focus(); }
+  });
+  restoreSects();
+  sects().forEach(d => d.addEventListener("toggle", saveSects));
+
+  const startHash = location.hash.slice(1);
   readHash();
   Promise.all([getJSON("data/trials.json", []), getJSON("data/papers.json", []), getJSON("data/meta.json", {}), getJSON("curated.json", {})])
     .then(([t, p, m, c]) => {
@@ -549,7 +751,11 @@ ol.refs li:target { color: var(--fg); background: var(--accent-soft); }
       fillSelect($("f-mod"), count("mod"));
       fillSelect($("f-set"), ["Early stage", "Locally advanced", "Advanced or metastatic"].filter(s => TRIALS.some(x => x.set.includes(s))));
       fillSelect($("f-ph"), Object.keys(PHASE_RANK).filter(ph => TRIALS.some(x => x.ph === ph)).sort((a, b) => PHASE_RANK[a] - PHASE_RANK[b]));
-      setupControls(); kpis(); render(); setupPapers(); renderCurated(c); stamp();
+      setupControls(); kpis(); render(); setupPapers(); renderCurated(c); stamp(); setHints();
+      // A link to a section opens it; a shared trial-filter link opens the trial table.
+      if (startHash && document.getElementById(startHash)) openSection(startHash, true);
+      else if (startHash && [...new URLSearchParams(startHash).keys()].some(k => k in DEFAULTS)) openSection("trials", true);
+      if ($("sitesearch").value.trim()) runSearch();
       if (!TRIALS.length) $("tbody").innerHTML = `<tr><td colspan="7" class="empty">Trial data has not been loaded yet. It appears after the first daily refresh.</td></tr>`;
     });
 })();
