@@ -90,6 +90,38 @@ details.sites ul { margin:6px 0 0; padding-left: 16px; font-size:0.8rem; color: 
 footer { padding: 30px 0 50px; color: var(--muted); font-size: 0.86rem; }
 code { font-family: var(--font-mono); font-size: 0.82em; background: var(--tag); padding: 1px 5px; border-radius: 4px; word-break: break-word; }
 .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+
+/* Introduction: reading column for prose, tables and lists wider */
+.intro p, .intro ul.trialist { max-width: 74ch; }
+.intro p.lede { font-family: var(--font-display); font-size: clamp(1.1rem, 2.2vw, 1.3rem); line-height: 1.45; margin: 4px 0 12px; text-wrap: pretty; }
+.intro h3.part { font-family: var(--font-display); font-size: clamp(1.2rem, 2.4vw, 1.45rem); text-transform: none; letter-spacing: 0; font-weight: 600; margin: 40px 0 4px; padding-top: 18px; border-top: 1px solid var(--line); }
+.intro h4 { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin: 24px 0 8px; }
+.intro .kpi span { display: block; max-width: 24ch; }
+sup.cite { font-size: 0.68em; line-height: 0; margin-left: 1px; font-variant-numeric: tabular-nums; }
+sup.cite a { text-decoration: none; }
+sup.cite a:hover { text-decoration: underline; }
+table.subtypes { font-size: 0.86rem; }
+table.subtypes td:first-child { min-width: 150px; }
+table.subtypes td:nth-child(3), table.subtypes td:nth-child(4) { min-width: 230px; }
+table.subtypes .num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.thsub { font-weight: 500; letter-spacing: 0.02em; text-transform: none; color: var(--muted); }
+.grp { color: var(--muted); font-size: 0.78rem; }
+p.fine { font-size: 0.84rem; color: var(--muted); margin-top: 10px; }
+ul.trialist { padding-left: 18px; margin: 0; display: grid; gap: 10px; }
+ol.refs { font-size: 0.82rem; color: var(--muted); padding-left: 26px; display: grid; gap: 6px; max-width: 110ch; }
+ol.refs li:target { color: var(--fg); background: var(--accent-soft); }
+@media (max-width: 640px) {
+  table.subtypes thead { display: none; }
+  table.subtypes, table.subtypes tbody, table.subtypes tr, table.subtypes td { display: block; min-width: 0 !important; }
+  table.subtypes tr { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  table.subtypes tr:last-child { border-bottom: 0; }
+  table.subtypes td.nobio { display: none !important; }
+  table.subtypes td { border-bottom: 0; padding: 3px 14px; white-space: normal !important; }
+  table.subtypes td.num::before { content: "Share of new cases, 2022 (men · women): "; color: var(--muted); }
+  table.subtypes td:nth-child(3)::before { content: "Clinical: "; color: var(--muted); }
+  table.subtypes td:nth-child(4):not(.nobio)::before { content: "Biology: "; color: var(--muted); }
+}
+.intro .tablewrap { margin-top: 6px; }
 </style>
 </head>
 <body>
@@ -100,12 +132,119 @@ code { font-family: var(--font-mono); font-size: 0.82em; background: var(--tag);
 </div></header>
 
 <nav class="sections" aria-label="Sections"><div class="wrap">
-  <a href="#trials">Trials</a><a href="#papers">New papers</a><a href="#data">Data &amp; portals</a>
+  <a href="#intro">Introduction</a><a href="#trials">Trials</a><a href="#papers">New papers</a><a href="#data">Data &amp; portals</a>
   <a href="#guidelines">Guidelines</a><a href="#funders">Funders</a><a href="#advocacy">Advocacy</a>
   <a href="#preprints">Preprints</a><a href="#about">About</a>
 </div></nav>
 
 <main>
+<section class="block intro" id="intro"><div class="wrap">
+  <h2>Introduction to lung cancer</h2>
+  <p class="lede">Lung cancer is the most commonly diagnosed cancer in Canada and the leading cause of cancer death in both men and women <sup class="cite"><a href="#ref-1">1</a></sup>. Worldwide it was the most frequently diagnosed cancer in 2022, with almost 2.5 million new cases, and the leading cause of cancer death, with an estimated 1.8 million deaths <sup class="cite"><a href="#ref-2">2</a></sup>.</p>
+  <p class="note">This section is a short clinical and scientific background for readers new to the field. Every statement is taken from the sources numbered at the end. It is a research reference, not medical advice.</p>
+
+  <div class="kpis">
+    <div class="kpi"><b>32,900</b><span>people in Canada projected to be diagnosed in 2026 <sup class="cite"><a href="#ref-1">1</a></sup></span></div>
+    <div class="kpi"><b>19,300</b><span>projected deaths in Canada in 2026, 22% of all cancer deaths <sup class="cite"><a href="#ref-1">1</a></sup></span></div>
+    <div class="kpi"><b>27%</b><span>five-year net survival in Canada, 2019 to 2021, up from 13% in 1992 to 1994 <sup class="cite"><a href="#ref-3">3</a></sup></span></div>
+    <div class="kpi"><b>1 in 8</b><span>cancers diagnosed worldwide in 2022 was a lung cancer <sup class="cite"><a href="#ref-2">2</a></sup></span></div>
+  </div>
+
+  <h3 class="part">Clinical background</h3>
+
+  <h4>Types of lung cancer</h4>
+  <p>Lung cancers are grouped by the type of cell in which they start. The two main groups are non-small cell lung cancer (NSCLC) and small cell lung cancer (SCLC) <sup class="cite"><a href="#ref-4">4</a></sup>. Pathologists classify tumours using the 2021 WHO Classification of Thoracic Tumours, which works from morphology first, supported by immunohistochemistry and then molecular testing, and puts more weight on genetic testing than earlier editions <sup class="cite"><a href="#ref-5">5</a></sup>.</p>
+  <div class="tablewrap"><table class="subtypes">
+    <thead><tr><th>Type</th><th class="num">Share of new cases worldwide, 2022<br><span class="thsub">Men · Women</span></th><th>Clinical features</th><th>Defining biology</th></tr></thead>
+    <tbody>
+      <tr><td><b>Adenocarcinoma</b><br><span class="grp">NSCLC</span></td><td class="num">45.6% · 59.7% <sup class="cite"><a href="#ref-6">6</a></sup></td>
+        <td>Usually starts in glandular cells on the outer part of the lung <sup class="cite"><a href="#ref-4">4</a></sup>. Incidence rates are highest in east Asia for both men and women <sup class="cite"><a href="#ref-6">6</a></sup>.</td>
+        <td>Testing for EGFR, ALK and ROS1 is recommended, and sequencing panels add ERBB2 (HER2), MET, BRAF, KRAS and RET, because these alterations select targeted drugs <sup class="cite"><a href="#ref-7">7</a></sup>.</td></tr>
+      <tr><td><b>Squamous cell carcinoma</b><br><span class="grp">NSCLC</span></td><td class="num">29.4% · 17.1% <sup class="cite"><a href="#ref-6">6</a></sup></td>
+        <td>Incidence in men is highest in eastern Europe <sup class="cite"><a href="#ref-6">6</a></sup>.</td>
+        <td>TP53 is mutated in nearly all tumours. The CDKN2A and RB1 pathway is altered in 72%, the PI3K pathway in 47%, squamous differentiation genes in 44% and NFE2L2 or KEAP1 in 34% <sup class="cite"><a href="#ref-8">8</a></sup>.</td></tr>
+      <tr><td><b>Large cell carcinoma</b><br><span class="grp">NSCLC</span></td><td class="num">6.5% · 6.5% <sup class="cite"><a href="#ref-6">6</a></sup></td>
+        <td>A less common type of NSCLC <sup class="cite"><a href="#ref-4">4</a></sup>.</td>
+        <td class="nobio">–</td></tr>
+      <tr><td><b>Small cell lung cancer</b><br><span class="grp">SCLC</span></td><td class="num">11.5% · 9.7% <sup class="cite"><a href="#ref-6">6</a></sup></td>
+        <td>About 15% of lung cancers in a 2021 review. It grows very fast, spreads early and is strongly linked to tobacco; most patients have metastatic disease when diagnosed <sup class="cite"><a href="#ref-9">9</a></sup>.</td>
+        <td>TP53 and RB1 are both inactivated in nearly all tumours <sup class="cite"><a href="#ref-10">10</a></sup>. Subtypes are defined by the transcription regulators ASCL1, NEUROD1, POU2F3 and YAP1 <sup class="cite"><a href="#ref-11">11</a></sup>.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="fine">Shares are the 2022 estimates for each sex; they do not add up to 100% because other and unspecified types are not shown <sup class="cite"><a href="#ref-6">6</a></sup>. The trial table also tags mesothelioma and thymic tumours, which are other cancers of the chest and are not covered here.</p>
+
+  <h4>Risk factors</h4>
+  <p>Smoking tobacco is the main risk for lung cancer <sup class="cite"><a href="#ref-12">12</a></sup>. In Canada, radon is the second leading cause of lung cancer after smoking and the leading cause in people who do not smoke; Health Canada estimates that it accounts for 16% of lung cancer deaths <sup class="cite"><a href="#ref-13">13</a></sup>. Second-hand smoke and outdoor air pollution also cause lung cancer, as do some workplace exposures including asbestos, and a first-degree relative with lung cancer may slightly raise risk <sup class="cite"><a href="#ref-12">12</a></sup>. Worldwide, an estimated 114,486 adenocarcinomas in men and 80,378 in women in 2022 were attributable to fine particulate air pollution <sup class="cite"><a href="#ref-6">6</a></sup>.</p>
+
+  <h4>Screening</h4>
+  <p>Low-dose CT screening of people at high risk lowers deaths from lung cancer. In the US National Lung Screening Trial, three annual low-dose CT scans reduced lung cancer mortality by 20% compared with chest radiography, although 96.4% of positive CT results were false positives <sup class="cite"><a href="#ref-14">14</a></sup>. In the Dutch and Belgian NELSON trial, volume CT screening of men lowered lung cancer mortality at 10 years compared with no screening (rate ratio 0.76) <sup class="cite"><a href="#ref-15">15</a></sup>. Ontario's organized program screens people aged 55 to 74 who have smoked daily for at least 20 years <sup class="cite"><a href="#ref-16">16</a></sup>.</p>
+
+  <h4>Diagnosis, testing and staging</h4>
+  <p>Treatment depends on cell type, molecular findings and stage. When tissue is limited or hard to obtain, cell-free DNA from blood can be used to identify a targetable mutation <sup class="cite"><a href="#ref-7">7</a></sup>. Stage is recorded with the TNM system. The proposals for its ninth edition, built from 76,518 analysable patients, split N2 lymph node disease into N2a and N2b and M1c metastatic disease into M1c1 and M1c2 <sup class="cite"><a href="#ref-17">17</a></sup>.</p>
+
+  <h4>How treatment has changed</h4>
+  <p>The randomized trials below are landmarks that changed practice. Results are summarized from each publication; they are not treatment recommendations, and current Canadian guidance is listed under <a href="#guidelines">Guidelines</a>.</p>
+  <ul class="trialist">
+    <li><b>Early-stage NSCLC.</b> Nivolumab added to chemotherapy before surgery lengthened median event-free survival from 20.8 to 31.6 months and raised the pathological complete response rate from 2.2% to 24.0% <sup class="cite"><a href="#ref-18">18</a></sup>. After resection of EGFR-mutated stage IB to IIIA disease, osimertinib raised five-year overall survival from 78% to 88% <sup class="cite"><a href="#ref-19">19</a></sup>. After resection of ALK-positive disease, alectinib kept 93.6% of patients alive and disease-free at two years, against 63.7% with chemotherapy <sup class="cite"><a href="#ref-20">20</a></sup>.</li>
+    <li><b>Stage III NSCLC that cannot be removed.</b> Durvalumab after chemoradiotherapy lengthened median progression-free survival from 5.6 to 16.8 months <sup class="cite"><a href="#ref-21">21</a></sup>.</li>
+    <li><b>Advanced NSCLC with a driver alteration.</b> Osimertinib as first treatment for EGFR-mutated disease gave a median progression-free survival of 18.9 months against 10.2 months with earlier EGFR inhibitors <sup class="cite"><a href="#ref-22">22</a></sup>. Sotorasib produced responses in 37.1% of previously treated patients with KRAS G12C mutations <sup class="cite"><a href="#ref-23">23</a></sup>.</li>
+    <li><b>Advanced NSCLC without a driver alteration.</b> In tumours with PD-L1 on at least 50% of cells, pembrolizumab lengthened median progression-free survival from 6.0 to 10.3 months compared with chemotherapy <sup class="cite"><a href="#ref-24">24</a></sup>. In non-squamous disease, adding pembrolizumab to chemotherapy raised 12-month overall survival from 49.4% to 69.2% <sup class="cite"><a href="#ref-25">25</a></sup>.</li>
+    <li><b>Small cell lung cancer.</b> In extensive-stage disease, atezolizumab added to carboplatin and etoposide lengthened median overall survival from 10.3 to 12.3 months <sup class="cite"><a href="#ref-26">26</a></sup>. In limited-stage disease, durvalumab after chemoradiotherapy lengthened median overall survival from 33.4 to 55.9 months <sup class="cite"><a href="#ref-27">27</a></sup>. After platinum chemotherapy, tarlatamab, a bispecific T-cell engager directed at DLL3, lengthened median overall survival from 8.3 to 13.6 months compared with chemotherapy <sup class="cite"><a href="#ref-28">28</a></sup>.</li>
+  </ul>
+
+  <h3 class="part">Scientific background</h3>
+
+  <h4>The genomic landscape of NSCLC</h4>
+  <p>The Cancer Genome Atlas profiled 230 resected lung adenocarcinomas and found a mean of 8.9 mutations per megabase and 18 significantly mutated genes. EGFR mutations were more frequent in women, and MET exon 14 skipping was found in 4% of tumours. MAPK and PI3K pathway activity measured at the protein level was explained by known mutations in only a fraction of cases <sup class="cite"><a href="#ref-29">29</a></sup>. In 178 squamous cell carcinomas the same consortium found mutation of TP53 in nearly all specimens and a potential therapeutic target in most tumours <sup class="cite"><a href="#ref-8">8</a></sup>.</p>
+
+  <h4>Proteogenomics</h4>
+  <p>The Clinical Proteomic Tumor Analysis Consortium (CPTAC) added deep proteomics, phosphoproteomics and acetylproteomics to genomic data. In 110 lung adenocarcinomas with 101 matched normal adjacent tissues, it identified therapeutic vulnerabilities linked to KRAS, EGFR and ALK events, reinforced the association of STK11 with immune-cold tumours, and found a smoking-related field effect in the normal tissue <sup class="cite"><a href="#ref-30">30</a></sup>. In squamous cell carcinoma, CPTAC identified NSD3 as an alternative driver in FGFR1-amplified tumours, and its data argue for measuring RB1 protein and phosphorylation before concluding that CDK4/6 inhibition has failed <sup class="cite"><a href="#ref-31">31</a></sup>. These datasets are public through the Proteomic Data Commons, listed under <a href="#data">Data &amp; portals</a>.</p>
+
+  <h4>Lung cancer in people who never smoked</h4>
+  <p>Whole-genome sequencing of 232 lung cancers in never-smokers (the Sherlock-Lung study) found three subtypes defined by copy number changes, named piano, mezzo-forte and forte, and no strong tobacco smoking signatures, even in people exposed to second-hand smoke <sup class="cite"><a href="#ref-32">32</a></sup>. Work on air pollution suggests that fine particulate matter promotes cancer from cells that already carry driver mutations. In mice, pollutants drew macrophages into the lung and released interleukin-1β, pushing EGFR-mutant cells into a progenitor-like state; in people, EGFR and KRAS driver mutations were found in 18% and 53% of histologically normal lung samples <sup class="cite"><a href="#ref-33">33</a></sup>.</p>
+
+  <h4>Small cell lung cancer biology</h4>
+  <p>Loss of TP53 and RB1 is obligatory in SCLC, and inactivating mutations in NOTCH family genes occur in 25% of tumours <sup class="cite"><a href="#ref-10">10</a></sup>. An expression analysis defined four subtypes, SCLC-A, -N and -P, named after ASCL1, NEUROD1 and POU2F3, and an inflamed subtype, SCLC-I. SCLC-I gained the most from adding immunotherapy to chemotherapy, and cisplatin shifted ASCL1-type patient-derived xenografts toward SCLC-I, which suggests subtype switching as a route to platinum resistance <sup class="cite"><a href="#ref-34">34</a></sup>.</p>
+
+  <h4 id="intro-refs">Sources</h4>
+  <ol class="refs">
+    <li id="ref-1">Canadian Cancer Society. Lung and bronchus cancer statistics (projected estimates for 2026, from the Canadian Cancer Statistics Advisory Committee, CMAJ 2026). Accessed 4 November 2026. <a href="https://cancer.ca/en/cancer-information/cancer-types/lung/statistics" target="_blank" rel="noopener">Link</a></li>
+    <li id="ref-2">Bray F, et al. Global cancer statistics 2022: GLOBOCAN estimates of incidence and mortality worldwide for 36 cancers in 185 countries. CA Cancer J Clin. 2024;74:229-263. <a href="https://doi.org/10.3322/caac.21834" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/38572751/" target="_blank" rel="noopener">PubMed 38572751</a></li>
+    <li id="ref-3">Statistics Canada. The Daily: Cancer survival statistics, 1992 to 2021. Released 13 August 2025. <a href="https://www150.statcan.gc.ca/n1/daily-quotidien/250813/dq250813a-eng.htm" target="_blank" rel="noopener">Link</a></li>
+    <li id="ref-4">Canadian Cancer Society. What is lung cancer? Accessed 4 November 2026. <a href="https://cancer.ca/en/cancer-information/cancer-types/lung/what-is-lung-cancer" target="_blank" rel="noopener">Link</a></li>
+    <li id="ref-5">Nicholson AG, et al. The 2021 WHO Classification of Lung Tumors: impact of advances since 2015. J Thorac Oncol. 2022;17:362-387. <a href="https://doi.org/10.1016/j.jtho.2021.11.003" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/34808341/" target="_blank" rel="noopener">PubMed 34808341</a></li>
+    <li id="ref-6">Luo G, et al. Estimated worldwide variation and trends in incidence of lung cancer by histological subtype in 2022 and over time: a population-based study. Lancet Respir Med. 2025;13:348-363. <a href="https://doi.org/10.1016/S2213-2600(24)00428-4" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/39914442/" target="_blank" rel="noopener">PubMed 39914442</a></li>
+    <li id="ref-7">Lindeman NI, et al. Updated molecular testing guideline for the selection of lung cancer patients for treatment with targeted tyrosine kinase inhibitors (CAP/IASLC/AMP). J Thorac Oncol. 2018;13:323-358. <a href="https://doi.org/10.1016/j.jtho.2017.12.001" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/29396253/" target="_blank" rel="noopener">PubMed 29396253</a></li>
+    <li id="ref-8">Cancer Genome Atlas Research Network. Comprehensive genomic characterization of squamous cell lung cancers. Nature. 2012;489:519-525. <a href="https://doi.org/10.1038/nature11404" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/22960745/" target="_blank" rel="noopener">PubMed 22960745</a></li>
+    <li id="ref-9">Rudin CM, et al. Small-cell lung cancer. Nat Rev Dis Primers. 2021;7:3. <a href="https://doi.org/10.1038/s41572-020-00235-0" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/33446664/" target="_blank" rel="noopener">PubMed 33446664</a></li>
+    <li id="ref-10">George J, et al. Comprehensive genomic profiles of small cell lung cancer. Nature. 2015;524:47-53. <a href="https://doi.org/10.1038/nature14664" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/26168399/" target="_blank" rel="noopener">PubMed 26168399</a></li>
+    <li id="ref-11">Rudin CM, et al. Molecular subtypes of small cell lung cancer: a synthesis of human and mouse model data. Nat Rev Cancer. 2019;19:289-297. <a href="https://doi.org/10.1038/s41568-019-0133-9" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/30926931/" target="_blank" rel="noopener">PubMed 30926931</a></li>
+    <li id="ref-12">Canadian Cancer Society. Risk factors for lung cancer. Accessed 4 November 2026. <a href="https://cancer.ca/en/cancer-information/cancer-types/lung/risks" target="_blank" rel="noopener">Link</a></li>
+    <li id="ref-13">Health Canada. Justifications and policy rationales for radon action. Modified 12 September 2024. <a href="https://www.canada.ca/en/health-canada/services/health-risks-safety/radiation/radon/action-guides/justification-policy-rationales.html" target="_blank" rel="noopener">Link</a></li>
+    <li id="ref-14">National Lung Screening Trial Research Team. Reduced lung-cancer mortality with low-dose computed tomographic screening. N Engl J Med. 2011;365:395-409. <a href="https://doi.org/10.1056/NEJMoa1102873" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/21714641/" target="_blank" rel="noopener">PubMed 21714641</a></li>
+    <li id="ref-15">de Koning HJ, et al. Reduced lung-cancer mortality with volume CT screening in a randomized trial. N Engl J Med. 2020;382:503-513. <a href="https://doi.org/10.1056/NEJMoa1911793" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/31995683/" target="_blank" rel="noopener">PubMed 31995683</a></li>
+    <li id="ref-16">Ontario Health (Cancer Care Ontario). Ontario Lung Screening Program. Accessed 3 November 2026. <a href="https://cancercareontario.ca/node/68831" target="_blank" rel="noopener">Link</a></li>
+    <li id="ref-17">Rami-Porta R, et al. The IASLC Lung Cancer Staging Project: proposals for revision of the TNM stage groups in the forthcoming (ninth) edition of the TNM classification for lung cancer. J Thorac Oncol. 2024;19:1007-1027. <a href="https://doi.org/10.1016/j.jtho.2024.02.011" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/38447919/" target="_blank" rel="noopener">PubMed 38447919</a></li>
+    <li id="ref-18">Forde PM, et al. Neoadjuvant nivolumab plus chemotherapy in resectable lung cancer (CheckMate 816). N Engl J Med. 2022;386:1973-1985. <a href="https://doi.org/10.1056/NEJMoa2202170" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/35403841/" target="_blank" rel="noopener">PubMed 35403841</a></li>
+    <li id="ref-19">Tsuboi M, et al. Overall survival with osimertinib in resected EGFR-mutated NSCLC (ADAURA). N Engl J Med. 2023;389:137-147. <a href="https://doi.org/10.1056/NEJMoa2304594" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/37272535/" target="_blank" rel="noopener">PubMed 37272535</a></li>
+    <li id="ref-20">Wu YL, et al. Alectinib in resected ALK-positive non-small-cell lung cancer (ALINA). N Engl J Med. 2024;390:1265-1276. <a href="https://doi.org/10.1056/NEJMoa2310532" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/38598794/" target="_blank" rel="noopener">PubMed 38598794</a></li>
+    <li id="ref-21">Antonia SJ, et al. Durvalumab after chemoradiotherapy in stage III non-small-cell lung cancer (PACIFIC). N Engl J Med. 2017;377:1919-1929. <a href="https://doi.org/10.1056/NEJMoa1709937" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/28885881/" target="_blank" rel="noopener">PubMed 28885881</a></li>
+    <li id="ref-22">Soria JC, et al. Osimertinib in untreated EGFR-mutated advanced non-small-cell lung cancer (FLAURA). N Engl J Med. 2018;378:113-125. <a href="https://doi.org/10.1056/NEJMoa1713137" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/29151359/" target="_blank" rel="noopener">PubMed 29151359</a></li>
+    <li id="ref-23">Skoulidis F, et al. Sotorasib for lung cancers with KRAS p.G12C mutation (CodeBreaK 100). N Engl J Med. 2021;384:2371-2381. <a href="https://doi.org/10.1056/NEJMoa2103695" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/34096690/" target="_blank" rel="noopener">PubMed 34096690</a></li>
+    <li id="ref-24">Reck M, et al. Pembrolizumab versus chemotherapy for PD-L1-positive non-small-cell lung cancer (KEYNOTE-024). N Engl J Med. 2016;375:1823-1833. <a href="https://doi.org/10.1056/NEJMoa1606774" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/27718847/" target="_blank" rel="noopener">PubMed 27718847</a></li>
+    <li id="ref-25">Gandhi L, et al. Pembrolizumab plus chemotherapy in metastatic non-small-cell lung cancer (KEYNOTE-189). N Engl J Med. 2018;378:2078-2092. <a href="https://doi.org/10.1056/NEJMoa1801005" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/29658856/" target="_blank" rel="noopener">PubMed 29658856</a></li>
+    <li id="ref-26">Horn L, et al. First-line atezolizumab plus chemotherapy in extensive-stage small-cell lung cancer (IMpower133). N Engl J Med. 2018;379:2220-2229. <a href="https://doi.org/10.1056/NEJMoa1809064" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/30280641/" target="_blank" rel="noopener">PubMed 30280641</a></li>
+    <li id="ref-27">Cheng Y, et al. Durvalumab after chemoradiotherapy in limited-stage small-cell lung cancer (ADRIATIC). N Engl J Med. 2024;391:1313-1327. <a href="https://doi.org/10.1056/NEJMoa2404873" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/39268857/" target="_blank" rel="noopener">PubMed 39268857</a></li>
+    <li id="ref-28">Mountzios G, et al. Tarlatamab in small-cell lung cancer after platinum-based chemotherapy (DeLLphi-304). N Engl J Med. 2025;393:349-361. <a href="https://doi.org/10.1056/NEJMoa2502099" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/40454646/" target="_blank" rel="noopener">PubMed 40454646</a></li>
+    <li id="ref-29">Cancer Genome Atlas Research Network. Comprehensive molecular profiling of lung adenocarcinoma. Nature. 2014;511:543-550. <a href="https://doi.org/10.1038/nature13385" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/25079552/" target="_blank" rel="noopener">PubMed 25079552</a></li>
+    <li id="ref-30">Gillette MA, et al. Proteogenomic characterization reveals therapeutic vulnerabilities in lung adenocarcinoma. Cell. 2020;182:200-225. <a href="https://doi.org/10.1016/j.cell.2020.06.013" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/32649874/" target="_blank" rel="noopener">PubMed 32649874</a></li>
+    <li id="ref-31">Satpathy S, et al. A proteogenomic portrait of lung squamous cell carcinoma. Cell. 2021;184:4348-4371. <a href="https://doi.org/10.1016/j.cell.2021.07.016" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/34358469/" target="_blank" rel="noopener">PubMed 34358469</a></li>
+    <li id="ref-32">Zhang T, et al. Genomic and evolutionary classification of lung cancer in never smokers. Nat Genet. 2021;53:1348-1359. <a href="https://doi.org/10.1038/s41588-021-00920-0" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/34493867/" target="_blank" rel="noopener">PubMed 34493867</a></li>
+    <li id="ref-33">Hill W, et al. Lung adenocarcinoma promotion by air pollutants. Nature. 2023;616:159-167. <a href="https://doi.org/10.1038/s41586-023-05874-3" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/37020004/" target="_blank" rel="noopener">PubMed 37020004</a></li>
+    <li id="ref-34">Gay CM, et al. Patterns of transcription factor programs and immune pathway activation define four major subtypes of SCLC with distinct therapeutic vulnerabilities. Cancer Cell. 2021;39:346-360. <a href="https://doi.org/10.1016/j.ccell.2020.12.014" target="_blank" rel="noopener">DOI</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/33482121/" target="_blank" rel="noopener">PubMed 33482121</a></li>
+  </ol>
+  <p class="fine">Written 4 November 2026. Figures are the estimates for the year each source states.</p>
+</div></section>
 <section class="block" id="trials"><div class="wrap">
   <h2>Open clinical trials</h2>
   <p class="note">Studies registered on ClinicalTrials.gov that are recruiting or not yet recruiting. The view opens on trials with at least one Canadian site; switch to the United States or worldwide below. Subtype, biomarker, modality and setting tags are assigned automatically from each record's title, conditions and interventions, so always confirm eligibility on the registry page.</p>
